@@ -154,7 +154,7 @@ export function hexToObject (hex) {
     }
 }
 
-/** Returns `true` if input is a 32-byte hex string */
+/** Returns `true` if input is a 32-byte he string */
 const ACCOUNT_AND_TRANSACTION_REGEX = /^[0-9a-fA-F]{64}$/
 export const isAccountOrTransaction = (string) => ACCOUNT_AND_TRANSACTION_REGEX.test(string)
 
