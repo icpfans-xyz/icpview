@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-01 11:42:41
- * @LastEditTime: 2021-07-05 17:29:20
+ * @LastEditTime: 2021-07-14 02:48:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/screens/index/components/supply.js
@@ -42,7 +42,7 @@ export default function Supply () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="Total validated identities / Online mining nodes"
+                                tooltip="当前总消息数"
                             >
                                 当前总消息数
                             </TooltipText>
@@ -50,7 +50,7 @@ export default function Supply () {
                         <div className="col-12 col-sm-4 bordered-col">
                             <MessageRate />
                             <TooltipText
-                                tooltip="Click to see details about total / cirtulating supply"
+                                tooltip="消息数/每秒"
                                 className="control-label"
                                 data-toggle="tooltip"
                             >
@@ -62,7 +62,7 @@ export default function Supply () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="Coins burnt by protocol (fees, penalties, lost stakes, etc.)"
+                                tooltip="ICP网络节点数"
                             >
                                 当前节点数
                             </TooltipText>

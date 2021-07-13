@@ -1,25 +1,23 @@
-import Link from 'next/link'
+// import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { NavItem, NavLink, TabPane, TabContent } from 'reactstrap'
-import { useQuery } from 'react-query'
+// import { useQuery } from 'react-query'
 import { useRouter } from 'next/router'
 import Layout from '../../shared/components/layout'
-import {
-    getEpochsCount,
-    getIdentity,
-    getAddressInfo,
-    getContract,
-    getPool
-} from '../../shared/api'
-import { dnaFmt, identityStatusFmt } from '../../shared/utils/utils'
+// import { getAccountTransactions } from '../../shared/api'
+import RosettaApi from '../api/rosetta/RosettaApi'
+// import { PageLoading, PageError } from '../../shared/components/loading'
+import { getIcpStringFromE8s } from '../../shared/utils/utils'
 import Transactions from '../../screens/address/components/transactions'
-import Rewards from '../../screens/address/components/rewards'
-import Penalties from '../../screens/address/components/penalties'
-import BalanceHistory from '../../screens/address/components/balances'
+// import Rewards from '../../screens/address/components/rewards'
+// import Penalties from '../../screens/address/components/penalties'
+// import BalanceHistory from '../../screens/address/components/balances'
 import { useHash, useHashChange } from '../../shared/utils/useHashChange'
 import TooltipText from '../../shared/components/tooltip'
 
 const DEFAULT_TAB = '#transactions'
-
+const rosettaApi = new RosettaApi()
+// const intiState = { count: '-', rows: null, isLoading: false, error: null }
 function Address () {
     const router = useRouter()
     const { address } = router.query
@@ -27,48 +25,123 @@ function Address () {
     const { hash, setHash, hashReady } = useHash()
     useHashChange((hash) => setHash(hash))
 
-    const { data: addressInfo } = useQuery(
-        address && ['balance', address],
-        (_, address) => getAddressInfo(address)
-    )
+    // const { data: addressInfo } = useQuery(address && ['balance', address], (_, address) =>
+    //     getAddressInfo(address)
+    // )
 
-    const { data: epochsCount } = useQuery(
-        address && ['epochs', address],
-        (_, address) => getEpochsCount(address)
-    )
+    // const { data: epochsCount } = useQuery(address && ['epochs', address], (_, address) =>
+    //     getEpochsCount(address)
+    // )
 
-    const { data: identityInfo } = useQuery(
-        epochsCount && ['identity', address],
-        (_, address) => getIdentity(address)
-    )
+    // const { data: identityInfo } = useQuery(epochsCount && ['identity', address], (_, address) =>
+    //     getIdentity(address)
+    // )
 
-    const { data: contractInfo } = useQuery(
-        address && ['contract', address],
-        (_, address) => getContract(address)
-    )
+    // const { data: contractInfo } = useQuery(address && ['contract', address], (_, address) =>
+    //     getContract(address)
+    // )
 
-    const { data: poolInfo } = useQuery(
-        address && ['pool', address],
-        (_, address) => getPool(address)
-    )
+    // const { data: poolInfo } = useQuery(address && ['pool', address], (_, address) =>
+    //     getPool(address)
+    // )
 
+    const [addressInfo, setAddressInfo] = useState({
+        balance: '-',
+        count: '-'
+    })
+
+    useEffect(() => {
+        async function getData () {
+            const res = await rosettaApi.getAccountBalance(address)
+            setAddressInfo({ balance: getIcpStringFromE8s(res), count: '-' })
+        }
+        if (address) {
+            getData()
+        }
+    }, [address])
+    // const intiState = { count: '-', rows: null, isLoading: false, rosettaError: null }
+    // const [state, setState] = useState(intiState)
+    // const { isLoading, error } = state
+    // useEffect(() => {
+    //     async function getData () {
+    //         // const res = await rosettaApi.getTransactionsByAccount(address, {
+    //         //     limit: 10,
+    //         //     offset: 10
+    //         //     // operator: 'or',
+    //         //     // max_block: 5,
+    //         //     // offset: 5
+    //         // })
+    //         const params = {
+    //             orderBy: 'blockHeight',
+    //             order: 'desc',
+    //             pageSize: 20,
+    //             page: 1,
+    //             accountId: address
+    //         }
+    //         setState({
+    //             count: '-', rows: null, isLoading: true, rosettaError: null
+    //         })
+    //         const { status, data } = await getAccountTransactions(params)
+    //         console.log(data)
+    //         if (status === 200) {
+    //             const { count, rows } = data
+    //             setState(state => {
+    //                 return {
+    //                     count,
+    //                     rows: state.rows ? [...state.rows, ...rows] : rows,
+    //                     isLoading: false,
+    //                     rosettaError: null
+    //                 }
+    //             })
+    //             setAddressInfo(state => {
+    //                 return { balance: state.balance, count }
+    //             })
+    //         } else {
+    //             setState(state => {
+    //                 return {
+    //                     count: state.count,
+    //                     rows: state.rows ? state.rows : null,
+    //                     isLoading: false,
+    //                     rosettaError: null
+    //                 }
+    //             })
+    //         }
+    //     }
+    //     if (address) {
+    //         getData()
+    //     }
+    // }, [address])
+    // let errorMessage = ''
+    // if (error) {
+    //     switch (error.errorType) {
+    //     case RosettaError.NotFound:
+    //         errorMessage = 'ERROR: Transaction not found.'
+    //         break
+    //     case RosettaError.Timeout:
+    //         errorMessage = 'ERROR: Timed out while getting the transaction.'
+    //         break
+    //     default: // NetworkError
+    //         errorMessage = 'ERROR: An error occurred while getting the transaction.'
+    //         break
+    //     }
+    // }
     return (
         <Layout title={`Address ${address}`}>
-      123
             <section className="section">
                 <div className="section_main__group">
-                    <h1 className="section_main__title">Address</h1>
+                    <h1 className="section_main__title">账户ID</h1>
                     <h3 className="section_main__subtitle">
                         <span>{address}</span>
                     </h3>
                 </div>
             </section>
-
+            {/* {isLoading && <PageLoading />}
+            {errorMessage && !isLoading && <PageError />} */}
             <AddressData
                 addressInfo={addressInfo}
-                identityInfo={identityInfo}
-                contractInfo={contractInfo}
-                poolInfo={poolInfo}
+                // identityInfo={identityInfo}
+                // contractInfo={contractInfo}
+                // poolInfo={poolInfo}
             />
 
             <section className="section section_tabs">
@@ -82,19 +155,17 @@ function Address () {
                                             active={
                                                 hashReady && (hash === DEFAULT_TAB || hash === '')
                                             }
-                                            href={DEFAULT_TAB}
-                                        >
-                                            <h3>Transactions</h3>
+                                            href={DEFAULT_TAB}>
+                                            <h3>交易</h3>
                                         </NavLink>
                                     </NavItem>
 
-                                    {identityInfo && (
+                                    {/* {identityInfo && (
                                         <>
                                             <NavItem>
                                                 <NavLink
                                                     active={hashReady && hash === '#rewards'}
-                                                    href="#rewards"
-                                                >
+                                                    href="#rewards">
                                                     <h3>Rewards</h3>
                                                 </NavLink>
                                             </NavItem>
@@ -102,8 +173,7 @@ function Address () {
                                             <NavItem>
                                                 <NavLink
                                                     active={hashReady && hash === '#penalty'}
-                                                    href="#penalty"
-                                                >
+                                                    href="#penalty">
                                                     <h3>Mining penalty</h3>
                                                 </NavLink>
                                             </NavItem>
@@ -112,11 +182,10 @@ function Address () {
                                     <NavItem>
                                         <NavLink
                                             active={hashReady && hash === '#history'}
-                                            href="#history"
-                                        >
+                                            href="#history">
                                             <h3>Balance history</h3>
                                         </NavLink>
-                                    </NavItem>
+                                    </NavItem> */}
                                 </ul>
                             </div>
                         </div>
@@ -127,11 +196,12 @@ function Address () {
                             <div className="card">
                                 <Transactions
                                     address={address}
+                                    setAddressInfo={setAddressInfo}
                                     visible={hashReady && (hash === DEFAULT_TAB || !hash)}
                                 />
                             </div>
                         </TabPane>
-                        <TabPane tabId="#rewards">
+                        {/* <TabPane tabId="#rewards">
                             <div className="card">
                                 <Rewards
                                     address={address}
@@ -154,7 +224,7 @@ function Address () {
                                     visible={hashReady && hash === '#history'}
                                 />
                             </div>
-                        </TabPane>
+                        </TabPane> */}
                     </TabContent>
                 </div>
             </section>
@@ -168,52 +238,48 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
             <section className="section section_info">
                 <div className="row">
                     <div className="col-12 col-sm-12">
-                        <h3>Details</h3>
+                        <h3>详情</h3>
                         <div className="card">
                             <div className="info_block">
                                 <div className="row">
                                     <div
                                         className={`col-12 ${
                                             identityInfo ? 'col-sm-4' : 'col-sm-6'
-                                        } bordered-col`}
-                                    >
+                                        } bordered-col`}>
                                         <h3 className="info_block__accent">
-                                            {(addressInfo && dnaFmt(addressInfo.balance)) || '-'}
+                                            {(addressInfo && `${addressInfo.balance} ICP`) || '-'}
                                         </h3>
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Available balance"
-                                        >
-                      Balance
+                                            tooltip="Available balance">
+                                            余额
                                         </TooltipText>
                                     </div>
-                                    <div
+                                    {/* <div
                                         className={`col-12 ${
                                             identityInfo ? 'col-sm-4' : 'col-sm-6'
                                         } bordered-col`}
-                                        style={{ display: identityInfo ? 'block' : 'none' }}
-                                    >
+                                        style={{ display: identityInfo ? 'block' : 'none' }}>
                                         <h3 className="info_block__accent">
                                             {(addressInfo && dnaFmt(addressInfo.stake)) || '-'}
                                         </h3>
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Frozen balance"
-                                        >
-                      Stake
+                                            tooltip="Frozen balance">
+                                            Stake
                                         </TooltipText>
-                                    </div>
+                                    </div> */}
                                     <div
                                         className={`col-12 ${
                                             identityInfo ? 'col-sm-4' : 'col-sm-6'
-                                        } bordered-col`}
-                                    >
+                                        } bordered-col`}>
                                         <h3 className="info_block__accent">
-                                            {(addressInfo && addressInfo.txCount) || '-'}
+                                            {(addressInfo && addressInfo.count) || '-'}
+                                            次
                                         </h3>
-                                        <div className="control-label">Transactions</div>
+                                        <div className="control-label">交易</div>
                                     </div>
                                 </div>
                             </div>
@@ -222,9 +288,9 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                 </div>
             </section>
 
-            {identityInfo && (
+            {/* {identityInfo && (
                 <section className="section section_details">
-                    <h3>Owner</h3>
+                    <h3>所有者</h3>
                     <div className="card">
                         <div className="row">
                             <div className="col-12 col-sm-6">
@@ -232,12 +298,10 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                                     <div className="control-label">Identity:</div>
                                     <div
                                         className="text_block text_block--ellipsis"
-                                        style={{ width: '80%' }}
-                                    >
+                                        style={{ width: '80%' }}>
                                         <Link
                                             href="/identity/[address]"
-                                            as={`/identity/${identityInfo.address}`}
-                                        >
+                                            as={`/identity/${identityInfo.address}`}>
                                             <a>
                                                 <img
                                                     alt="user-pic"
@@ -262,9 +326,9 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                         </div>
                     </div>
                 </section>
-            )}
+            )} */}
 
-            {contractInfo && (
+            {/* {contractInfo && (
                 <section className="section section_details">
                     <h3>Smart contract</h3>
                     <div className="card">
@@ -274,12 +338,10 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                                     <div className="control-label">Address:</div>
                                     <div
                                         className="text_block text_block--ellipsis"
-                                        style={{ width: '80%' }}
-                                    >
+                                        style={{ width: '80%' }}>
                                         <Link
                                             href="/contract/[address]"
-                                            as={`/contract/${contractInfo.address}`}
-                                        >
+                                            as={`/contract/${contractInfo.address}`}>
                                             <a>
                                                 <img
                                                     alt="user-pic"
@@ -302,9 +364,9 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                         </div>
                     </div>
                 </section>
-            )}
+            )} */}
 
-            {poolInfo && (
+            {/* {poolInfo && (
                 <section className="section section_details">
                     <h3>Pool</h3>
                     <div className="card">
@@ -314,12 +376,10 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                                     <div className="control-label">Address:</div>
                                     <div
                                         className="text_block text_block--ellipsis"
-                                        style={{ width: '80%' }}
-                                    >
+                                        style={{ width: '80%' }}>
                                         <Link
                                             href="/pool/[address]"
-                                            as={`/pool/${poolInfo.address}`}
-                                        >
+                                            as={`/pool/${poolInfo.address}`}>
                                             <a>
                                                 <img
                                                     alt="user-pic"
@@ -342,7 +402,7 @@ function AddressData ({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                         </div>
                     </div>
                 </section>
-            )}
+            )} */}
         </>
     )
 }

@@ -5,11 +5,16 @@ import {
     // UncontrolledButtonDropdown
 } from 'reactstrap'
 import { useState } from 'react'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
+// import { getCrc32 } from '@dfinity/principal/lib/cjs/utils/getCrc'
 import ReactGA from 'react-ga'
 // import Link from 'next/link'
+import {
+    isAccountOrTransaction,
+    isAccount
+} from '../utils/utils'
 import { Helmet } from 'react-helmet'
-import { search } from '../api'
+// import { search } from '../api'
 // import { useSession } from '../utils/session-context'
 import TopHeader from './topheader'
 
@@ -28,37 +33,57 @@ function Layout ({ children, title = '', signinLoading = false }) {
     const doSearch = async (e) => {
         e.preventDefault()
         setState({ ...state, disabled: true })
-        try {
-            const result = await search(state.value)
-            if (!result || !result.length) {
-                alert('Nothing found...')
+        if (isAccountOrTransaction(state.value)) {
+            if (isAccount(state.value)) {
+                router.push(`/address/${state.value}`)
+                return
             } else {
-                for (let i = 0; i < result.length; i += 1) {
-                    const item = result[i]
-                    switch (item.name) {
-                    case 'Address': {
-                        Router.push(`/address/${item.value}`)
-                        return
-                    }
-                    case 'Block': {
-                        Router.push(`/block/${item.value}`)
-                        return
-                    }
-                    case 'Flip': {
-                        Router.push(`/flip/${item.value}`)
-                        return
-                    }
-                    case 'Transaction': {
-                        Router.push(`/transaction/${item.value}`)
-                        return
-                    }
-                    default:
-                    }
-                }
+                router.push(`/transaction/${state.value}`)
+                return
             }
-        } finally {
-            setState({ ...state, disabled: false })
+        } else {
+            alert('未查询到任何结果...')
         }
+        setState({ ...state, disabled: false })
+        // const blob = Buffer.from(state.value, 'hex')
+        // console.log(blob)
+        // console.log(blob.slice(0, 4).toString())
+        // const crc32Buf = Buffer.alloc(4)
+        // console.log(Buffer.alloc(4))
+        // crc32Buf.writeUInt32BE(getCrc32(blob.slice(4)))
+        // console.log(crc32Buf.toString())
+        // console.log(blob.slice(0, 4).toString() === crc32Buf.toString())
+        // try {
+        //     const result = await search(state.value)
+        //     if (!result || !result.length) {
+        //         alert('Nothing found...')
+        //     } else {
+        //         for (let i = 0; i < result.length; i += 1) {
+        //             const item = result[i]
+        //             switch (item.name) {
+        //             case 'Address': {
+        //                 Router.push(`/address/${item.value}`)
+        //                 return
+        //             }
+        //             case 'Block': {
+        //                 Router.push(`/block/${item.value}`)
+        //                 return
+        //             }
+        //             case 'Flip': {
+        //                 Router.push(`/flip/${item.value}`)
+        //                 return
+        //             }
+        //             case 'Transaction': {
+        //                 Router.push(`/transaction/${item.value}`)
+        //                 return
+        //             }
+        //             default:
+        //             }
+        //         }
+        //     }
+        // } finally {
+        //     setState({ ...state, disabled: false })
+        // }
     }
 
     return (
@@ -70,17 +95,20 @@ function Layout ({ children, title = '', signinLoading = false }) {
             <header className="header">
                 <div className="container">
                     <div className="row justify-content-between align-items-center">
-                        {/* <div className="col-auto">
+                        <div className="col-auto">
                             <div className="header_logo">
-                                <a className="" href="/">
-                                    <img
+                                <a className="back_logo" href="/">
+                                    <span>
+                                    主页
+                                    </span>
+                                    {/* <img
                                         src="/static/images/idena_black.svg"
                                         alt="Idena"
                                         width="44px"
-                                    />
+                                    /> */}
                                 </a>
                             </div>
-                        </div> */}
+                        </div>
                         <div className="col">
                             <form action="" className="form_search">
                                 <div className="input-group">
@@ -95,7 +123,7 @@ function Layout ({ children, title = '', signinLoading = false }) {
                                     <input
                                         value={state.value}
                                         type="search"
-                                        placeholder="Address, flip, invitation, transaction, block..."
+                                        placeholder="账户ID, 交易哈希, 区块..."
                                         className="form-control"
                                         onChange={(e) =>
                                             setState({

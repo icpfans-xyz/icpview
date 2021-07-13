@@ -39,6 +39,11 @@ export default function Home () {
             return []
         }
     }
+
+    const [pageIndex, setPageIndex] = useState(0)
+    function handelePage (page) {
+        setPageIndex(pageIndex + page)
+    }
     useEffect(() => {
         async function getBlockIndex () {
             const rosettaApi = new RosettaApi()
@@ -50,7 +55,7 @@ export default function Home () {
             } else {
                 setState({
                     pageSize: 10,
-                    pageIndex: 0,
+                    pageIndex,
                     transactionsCount: maxBlockIndex + 1,
                     rosettaError: null
                 })
@@ -171,10 +176,11 @@ export default function Home () {
                         <TabPane tabId={DEFAULT_TAB}>
                             <div className="card">
                                 <Transactions
-                                    pageIndex={state.pageIndex}
+                                    pageIndex={pageIndex}
                                     pageSize={state.pageSize}
                                     transactionsCount={transactionsCount}
                                     getTransactions={getTransactions}
+                                    handelePage={handelePage}
                                     // epoch={data && data.epoch}
                                     limit={10}
                                     visible={hashReady && (hash === DEFAULT_TAB || hash === '')}

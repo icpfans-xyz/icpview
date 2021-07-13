@@ -6,6 +6,8 @@ const COINGECKO_API_URL = 'https://api.coingecko.com/api/v3'
 
 const IC_API_URL = 'https://ic-api.internetcomputer.org/api'
 
+const ICROCK_API_URL = 'https://ic.rocks/api'
+
 function apiCoingecko () {
     return axios.create({
         baseURL: COINGECKO_API_URL
@@ -24,6 +26,11 @@ function apiIc () {
     })
 }
 
+function apiIcRock () {
+    return axios.create({
+        baseURL: ICROCK_API_URL
+    })
+}
 async function getResponse (request) {
     const { data } = await request
     const { result, continuationToken, error } = data
@@ -134,6 +141,11 @@ export async function getBlockTransactions (block, limit, continuationToken) {
             params: { limit, continuationToken }
         })
     )
+}
+export async function getAccountTransactions (params) {
+    return apiIcRock().get('/transactions', {
+        params
+    })
 }
 
 export async function getTransactions (address, limit, continuationToken) {

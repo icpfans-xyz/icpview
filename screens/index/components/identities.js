@@ -96,7 +96,7 @@ export default function Identities () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="blocks"
+                                tooltip="当前出块数量"
                             >
                                 当前出块数量
                             </TooltipText>
@@ -120,7 +120,7 @@ export default function Identities () {
                             <TooltipText
                                 className="control-label hide-border"
                                 data-toggle="tooltip"
-                                tooltip="View more network stats at https://internetcomputer.org/"
+                                tooltip="查看更多网络状态 https://internetcomputer.org/"
                             >
                                 {/* <a href="https://idena.today" target="blank">
                   Network stats &rsaquo;
@@ -133,7 +133,7 @@ export default function Identities () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="blockRate/bps"
+                                tooltip="出块数/每秒"
                             >
                                 当前出块速度
                             </TooltipText>

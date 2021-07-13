@@ -1,3 +1,6 @@
+import BigNumber from 'bignumber.js'
+import { getCrc32 } from '@dfinity/principal/lib/cjs/utils/getCrc'
+
 export function precise1 (x) {
     return Math.round(x * 10) / 10
 }
@@ -5,9 +8,22 @@ export function precise1 (x) {
 export function precise2 (x) {
     return Math.round(x * 100) / 100
 }
-
+export function getIcpStringFromE8s (icpE8s, shouldRound) {
+    let icp
+    if (icpE8s instanceof BigNumber) {
+        icp = shouldRound
+            ? icpE8s.dividedToIntegerBy(100000000).toNumber()
+            : icpE8s.div(100000000).toNumber()
+    } else {
+        icp = shouldRound ? Math.round(icpE8s / 100000000) : icpE8s / 100000000
+    }
+    return icp.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 8 })
+}
 export function precise6 (x) {
     return Math.round(x * 1000000) / 1000000
+}
+export function precise8 (x) {
+    return Math.round(x * 100000000) / 100000000
 }
 
 export function dnaFmt (amount, curency = ' iDNA') {
@@ -22,9 +38,7 @@ export function usdFmt (amount, curency = '$') {
 
 export function txTypeFmt (txType, data) {
     if (txType === 'OnlineStatusTx') {
-        return `Mining status ${
-            data ? (data.becomeOnline ? 'On' : 'Off') : 'switching'
-        }`
+        return `Mining status ${data ? (data.becomeOnline ? 'On' : 'Off') : 'switching'}`
     }
     if (txType === 'SubmitFlipTx') return 'Submit flip'
     if (txType === 'SendTx') return 'Send'
@@ -53,9 +67,7 @@ export function epochFmt (epoch) {
 export function lastSeenFmt (str) {
     const lastSeenDate = new Date(str)
     const now = new Date()
-    const diff = Math.ceil(
-        Math.abs(lastSeenDate.getTime() - now.getTime()) / 1000
-    )
+    const diff = Math.ceil(Math.abs(lastSeenDate.getTime() - now.getTime()) / 1000)
 
     if (diff < 60) return 'Recently'
     if (diff >= 60 && diff < 360) return '10 minutes ago'
@@ -82,7 +94,7 @@ export function timeSince (str, addBreak = false) {
     }
 
     if (secondsPast > 300) {
-        return addBreak ? [dateFmt(str), <br key={'br0'}/>, timeFmt(str)] : dateTimeFmt(str)
+        return addBreak ? [dateFmt(str), <br key={'br0'} />, timeFmt(str)] : dateTimeFmt(str)
     }
 }
 
@@ -136,10 +148,23 @@ export function isIdentityPassed (state) {
 
 export function hexToObject (hex) {
     try {
-        return JSON.parse(
-            new TextDecoder().decode(Buffer.from(hex.substring(2), 'hex'))
-        )
+        return JSON.parse(new TextDecoder().decode(Buffer.from(hex.substring(2), 'hex')))
     } catch {
         return {}
+    }
+}
+
+/** Returns `true` if input is a 32-byte hex string */
+const ACCOUNT_AND_TRANSACTION_REGEX = /^[0-9a-fA-F]{64}$/
+export const isAccountOrTransaction = (string) => ACCOUNT_AND_TRANSACTION_REGEX.test(string)
+
+export const isAccount = (string) => {
+    try {
+        const blob = Buffer.from(string, 'hex')
+        const crc32Buf = Buffer.alloc(4)
+        crc32Buf.writeUInt32BE(getCrc32(blob.slice(4)))
+        return blob.slice(0, 4).toString() === crc32Buf.toString()
+    } catch (error) {
+        return false
     }
 }

@@ -7,11 +7,12 @@ import Layout from '../../shared/components/layout'
 import { PageLoading, PageError } from '../../shared/components/loading'
 import RosettaApi, { RosettaError } from '../api/rosetta/RosettaApi'
 import {
+    getIcpStringFromE8s,
     dnaFmt,
     dateTimeFmt
     // epochFmt
     // txTypeFmt
-} from '../../shared/utils/utils'
+} from '../..//shared/utils/utils'
 
 const initState = {
     icpToUsd: null,
@@ -36,7 +37,6 @@ function Tx () {
                 transaction: null
             })
             const transaction = await rosettaApi.getTransaction(hash)
-            console.log(transaction)
             if (transaction instanceof RosettaError) {
                 setState({
                     icpToUsd: null,
@@ -189,7 +189,8 @@ function TxDetails (data) {
                             </div>
                             <hr />
                             <div className="control-label">Fee paid:</div>
-                            <div className="text_block">{dnaFmt(data.fee, ' ICP')}</div>
+                            {/* <div className="text_block">{dnaFmt(getIcpStringFromE8s(data.fee), ' ICP')}</div> */}
+                            <div className="text_block">{getIcpStringFromE8s(data.fee)} ICP</div>
 
                             {/* <hr />
                             <div className="control-label">Fee limit:</div> */}

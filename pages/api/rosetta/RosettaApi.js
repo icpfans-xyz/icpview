@@ -213,9 +213,9 @@ export default class RosettaApi {
      * @returns {Promise<Array<Transaction>|null>} An array of Transaction objects, or a RosettaError
      * for error.
      */
-    async getTransactionsByAccount (accountAddress) {
+    async getTransactionsByAccount (accountAddress, params = {}) {
         try {
-            const response = await this.transactionsByAccount(accountAddress)
+            const response = await this.transactionsByAccount(accountAddress, params)
             const transactions = await Promise.all(
                 response.transactions.map((blockTransaction) => {
                     return new Transaction(
@@ -314,11 +314,12 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async transactionsByAccount (accountAddress) {
+    async transactionsByAccount (accountAddress, params = {}) {
         const networkIdentifier = await this.networkIdentifier
         return this.request('/search/transactions', {
             network_identifier: networkIdentifier,
-            account_identifier: { address: accountAddress }
+            account_identifier: { address: accountAddress },
+            ...params
         })
     }
 

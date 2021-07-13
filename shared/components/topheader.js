@@ -136,7 +136,7 @@ export default function TopHeader () {
                             name="ICP 价格"
                             value={usdFmt(precise2(marketData.price))}
                             change={marketData.priceChange}
-                            tooltip="Idena price | 24h price change https://coingecko.com"
+                            tooltip="ICP 24小时价格趋势 https://coingecko.com"
                             href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                             blank
                         />
@@ -178,20 +178,20 @@ export default function TopHeader () {
                         <Card
                             name="ICP 市值"
                             value={usdFmt(Math.round(marketData.marketCap))}
-                            tooltip="https://coingecko.com"
+                            tooltip="查看更多 ICP 市值信息"
                             href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                             blank
                         />
                         <Card
                             name="ICP 发行量"
                             value={usdFmt(Math.round(marketData.totalSupply), '')}
-                            tooltip="Total Supply"
+                            tooltip="查看更多 ICP 发行量信息"
                             href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                         />
                         <Card
                             name="ICP 流通量"
                             value={usdFmt(Math.round(marketData.circulatingSupply), '')}
-                            tooltip="Total Supply"
+                            tooltip="查看更多 ICP 流通量信息"
                             href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                         />
                         {/* <Card
