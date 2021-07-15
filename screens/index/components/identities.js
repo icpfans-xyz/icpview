@@ -91,7 +91,7 @@ export default function Identities () {
             <div className="card">
                 <div className="info_block">
                     <div className="row">
-                        <div className="col-12 col-sm-8 bordered-col">
+                        <div className="col-12 col-sm-6 bordered-col">
                             <Blocks />
                             <TooltipText
                                 className="control-label"
@@ -128,7 +128,7 @@ export default function Identities () {
                             </TooltipText>
                         </div>
 
-                        <div className="col-12 col-sm-4 bordered-col">
+                        <div className="col-12 col-sm-6 bordered-col">
                             <BlockRate />
                             <TooltipText
                                 className="control-label"

@@ -97,15 +97,14 @@ function Layout ({ children, title = '', signinLoading = false }) {
                     <div className="row justify-content-between align-items-center">
                         <div className="col-auto">
                             <div className="header_logo">
-                                <a className="back_logo" href="/">
+                                <a className="" href="/">
                                     <span>
-                                    主页
                                     </span>
-                                    {/* <img
-                                        src="/static/images/idena_black.svg"
+                                    <img
+                                        src="/static/images/icpview_logo.png"
                                         alt="Idena"
-                                        width="44px"
-                                    /> */}
+                                        width="100px"
+                                    />
                                 </a>
                             </div>
                         </div>

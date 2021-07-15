@@ -103,9 +103,10 @@ function TxDetails (data) {
                         <div className="section__group">
                             <div className="control-label">Block Index:</div>
                             <div className="text_block">
-                                <Link href="/block/[block]" as={`/block/${data.blockHeight}`}>
+                                {data.blockIndex}
+                                {/* <Link href="/block/[block]" as={`/block/${data.blockHeight}`}>
                                     <a>{data.blockIndex}</a>
-                                </Link>
+                                </Link> */}
                             </div>
                             <hr />
                             <div className="control-label">状态:</div>
