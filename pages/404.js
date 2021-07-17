@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-07-01 11:42:41
+ * @LastEditTime: 2021-07-18 02:20:47
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /icp-dao/Users/chenglei/work/icpview/pages/404.js
+ */
 import Layout from '../shared/components/layout'
 
 export default function Error404 () {
@@ -9,7 +17,7 @@ export default function Error404 () {
                         <div className="col-md-8">
                             <h1 className="section_message__accent">404</h1>
                             <div className="section_message__text">
-                The page you were looking for doesn't exist.
+                                The page you were looking for doesn't exist.
                             </div>
                         </div>
                     </div>

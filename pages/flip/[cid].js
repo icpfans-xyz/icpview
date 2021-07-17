@@ -10,11 +10,7 @@ import {
     getFlipLongAnswers,
     getIdentityByEpoch
 } from '../../shared/api'
-import {
-    epochFmt,
-    dateTimeFmt,
-    identityStatusFmt
-} from '../../shared/utils/utils'
+import { epochFmt, dateTimeFmt, identityStatusFmt } from '../../shared/utils/utils'
 import TooltipText from '../../shared/components/tooltip'
 
 function Flip () {
@@ -27,14 +23,12 @@ function Flip () {
         getFlipContent(cid)
     )
 
-    const { data: adjacentFlips } = useQuery(
-        cid && ['adjacentFlips', cid],
-        (_, cid) => getAdjacentFlips(cid)
+    const { data: adjacentFlips } = useQuery(cid && ['adjacentFlips', cid], (_, cid) =>
+        getAdjacentFlips(cid)
     )
 
-    const { data: shortAnswers } = useQuery(
-        cid && ['shortAnswers', cid],
-        (_, cid) => getFlipShortAnswers(cid)
+    const { data: shortAnswers } = useQuery(cid && ['shortAnswers', cid], (_, cid) =>
+        getFlipShortAnswers(cid)
     )
 
     const { data: longAnswers } = useQuery(cid && ['longAnswers', cid], (_, cid) =>
@@ -43,11 +37,9 @@ function Flip () {
 
     const epoch = flip ? flip.epoch : 0
 
-    const prevCid =
-    adjacentFlips && adjacentFlips.prev && adjacentFlips.prev.value
+    const prevCid = adjacentFlips && adjacentFlips.prev && adjacentFlips.prev.value
 
-    const nextCid =
-    adjacentFlips && adjacentFlips.next && adjacentFlips.next.value
+    const nextCid = adjacentFlips && adjacentFlips.next && adjacentFlips.next.value
 
     const positions = getImagesPositions(flipContent)
 
@@ -56,8 +48,7 @@ function Flip () {
             <section className="section">
                 <div className="section_main__group">
                     <h1 className="section_main__title">
-            Flip{' '}
-                        {flipContent && !flipContent.leftOrder ? '(encrypted content)' : ''}
+                        Flip {flipContent && !flipContent.leftOrder ? '(encrypted content)' : ''}
                     </h1>
                     <h3 className="section_main__subtitle">{cid}</h3>
                 </div>
@@ -193,13 +184,13 @@ function Flip () {
                                     </p>
                                 )}
                                 {flip &&
-                  !flip.words &&
-                  (flip.wrongWords || flip.status === 'QualifiedByNone') && (
+                                    !flip.words &&
+                                    (flip.wrongWords || flip.status === 'QualifiedByNone') && (
                                     <p className="text_block">
                                         <i className="icon icon--micro_fail" />
-                      The flip was reported as having inappropriate content,
-                      labels on top of the images showing the right order or
-                      text needed to solve the flip
+                                            The flip was reported as having inappropriate content,
+                                            labels on top of the images showing the right order or
+                                            text needed to solve the flip
                                     </p>
                                 )}
                             </div>
@@ -217,14 +208,12 @@ function Flip () {
                                 <div className="control-label">Author:</div>
                                 <div
                                     className="text_block text_block--ellipsis"
-                                    style={{ width: '80%' }}
-                                >
+                                    style={{ width: '80%' }}>
                                     {flip
                                         ? (
                                             <Link
                                                 href="/identity/[address]"
-                                                as={`/identity/${flip.author}`}
-                                            >
+                                                as={`/identity/${flip.author}`}>
                                                 <a>
                                                     <img
                                                         alt="user-pic"
@@ -257,9 +246,7 @@ function Flip () {
 
                                 <hr />
                                 <div className="control-label">Size:</div>
-                                <div className="text_block">
-                                    {(flip && flip.size) || '-'} bytes
-                                </div>
+                                <div className="text_block">{(flip && flip.size) || '-'} bytes</div>
                             </div>
                         </div>
                         <div className="col-12 col-sm-6">
@@ -275,8 +262,7 @@ function Flip () {
                                         ? (
                                             <Link
                                                 href="/block/[block]"
-                                                as={`/block/${flip.blockHeight}`}
-                                            >
+                                                as={`/block/${flip.blockHeight}`}>
                                                 <a>{flip.blockHeight}</a>
                                             </Link>
                                         )
@@ -288,14 +274,12 @@ function Flip () {
                                 <div className="control-label">Tx:</div>
                                 <div
                                     className="text_block text_block--ellipsis"
-                                    style={{ width: '80%' }}
-                                >
+                                    style={{ width: '80%' }}>
                                     {flip
                                         ? (
                                             <Link
                                                 href="/transaction/[hash]"
-                                                as={`/transaction/${flip.txHash}`}
-                                            >
+                                                as={`/transaction/${flip.txHash}`}>
                                                 <a>{flip.txHash}</a>
                                             </Link>
                                         )
@@ -319,35 +303,35 @@ function Flip () {
                                     <div className="col-12 col-sm-6 bordered-col">
                                         <h3 className="info_block__accent">
                                             {flip &&
-                      (flip.status === 'Qualified' ||
-                        flip.status === 'WeaklyQualified')
+                                            (flip.status === 'Qualified' ||
+                                                flip.status === 'WeaklyQualified')
                                                 ? flip.answer
                                                 : '-'}
                                         </h3>
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Answer agreed by qualification committee"
-                                        >
-                      Answer
+                                            tooltip="Answer agreed by qualification committee">
+                                            Answer
                                         </TooltipText>
                                     </div>
                                     <div className="col-12 col-sm-6 bordered-col">
                                         <h3 className="info_block__accent">
                                             {flip && flip.status === 'Qualified' ? 'Strong' : ''}
-                                            {flip && flip.status === 'WeaklyQualified' ? 'Weak' : ''}
+                                            {flip && flip.status === 'WeaklyQualified'
+                                                ? 'Weak'
+                                                : ''}
                                             {flip &&
-                      flip.status !== 'Qualified' &&
-                      flip.status !== 'WeaklyQualified'
+                                            flip.status !== 'Qualified' &&
+                                            flip.status !== 'WeaklyQualified'
                                                 ? 'No consensus'
                                                 : ''}
                                         </h3>
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Qualification committee consensus"
-                                        >
-                      Consensus
+                                            tooltip="Qualification committee consensus">
+                                            Consensus
                                         </TooltipText>
                                     </div>
                                 </div>
@@ -362,31 +346,29 @@ function Flip () {
                                     <div className="col-12 col-sm-4 bordered-col">
                                         <h3 className="info_block__accent">
                                             {(longAnswers &&
-                        longAnswers.filter((x) => x.respAnswer === 'Left')
-                            .length) ||
-                        '-'}
+                                                longAnswers.filter((x) => x.respAnswer === 'Left')
+                                                    .length) ||
+                                                '-'}
                                         </h3>
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Votes for Left answer"
-                                        >
-                      Left
+                                            tooltip="Votes for Left answer">
+                                            Left
                                         </TooltipText>
                                     </div>
                                     <div className="col-12 col-sm-4 bordered-col">
                                         <h3 className="info_block__accent">
                                             {(longAnswers &&
-                        longAnswers.filter((x) => x.respAnswer === 'Right')
-                            .length) ||
-                        '-'}
+                                                longAnswers.filter((x) => x.respAnswer === 'Right')
+                                                    .length) ||
+                                                '-'}
                                         </h3>
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Votes for Right answer"
-                                        >
-                      Right
+                                            tooltip="Votes for Right answer">
+                                            Right
                                         </TooltipText>
                                     </div>
                                     <div className="col-12 col-sm-4 bordered-col">
@@ -396,9 +378,8 @@ function Flip () {
                                         <TooltipText
                                             className="control-label"
                                             data-toggle="tooltip"
-                                            tooltip="Bad flip reported"
-                                        >
-                      Reported
+                                            tooltip="Bad flip reported">
+                                            Reported
                                         </TooltipText>
                                     </div>
                                 </div>
@@ -420,82 +401,83 @@ function Flip () {
                                             <th>Identity</th>
                                             <th style={{ width: 190 }}>
                                                 <TooltipText tooltip="Identity status before the validation">
-                          Status
+                                                    Status
                                                 </TooltipText>
                                             </th>
                                             <th style={{ width: 140 }}>
                                                 <TooltipText tooltip="Answer given on qualification session">
-                          Answer
+                                                    Answer
                                                 </TooltipText>
                                             </th>
                                             <th style={{ width: 140 }}>
                                                 <TooltipText tooltip="Reporting irrelevance to keywords, inappropriate content, labels on top of the images showing the right order or text needed to solve the flip">
-                          Reporting
+                                                    Reporting
                                                     <br />
-                          bad flip
+                                                    bad flip
                                                 </TooltipText>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {flip &&
-                      longAnswers &&
-                      longAnswers.map((item) => (
-                          <tr>
-                              <td>
-                                  <div className="user-pic">
-                                      <img
-                                          src={`https://robohash.idena.io/${item.address.toLowerCase()}`}
-                                          alt="pic"
-                                          width="32"
-                                      />
-                                  </div>
-                                  <div className="text_block text_block--ellipsis">
-                                      <Link
-                                          href="/identity/[address]/epoch/[epoch]/validation"
-                                          as={`/identity/${item.address}/epoch/${
-                                              epoch + 1
-                                          }/validation#longAnswers`}
-                                      >
-                                          <a>{item.address}</a>
-                                      </Link>
-                                  </div>
-                              </td>
-                              <td>
-                                  {epoch && (
-                                      <IdentityStatus
-                                          epoch={epoch}
-                                          address={item.address}
-                                      />
-                                  )}
-                              </td>
-                              <td>
-                                  {item.flipAnswer !== 'None'
-                                      ? (
-                                          item.respAnswer === item.flipAnswer
-                                              ? (
-                                                  <i className="icon icon--micro_success" />
-                                              )
-                                              : (
-                                                  <i className="icon icon--micro_fail" />
-                                              )
-                                      )
-                                      : (
-                                          ''
-                                      )}
-                                  {item.respAnswer === 'None'
-                                      ? 'No answer'
-                                      : item.respAnswer}
-                              </td>
-                              <td>
-                                  {item.respAnswer === 'None'
-                                      ? '-'
-                                      : item.respWrongWords
-                                          ? 'Reported'
-                                          : '-'}
-                              </td>
-                          </tr>
-                      ))}
+                                            longAnswers &&
+                                            longAnswers.map((item) => (
+                                                <tr>
+                                                    <td>
+                                                        <div className="user-pic">
+                                                            <img
+                                                                src={`https://robohash.idena.io/${item.address.toLowerCase()}`}
+                                                                alt="pic"
+                                                                width="32"
+                                                            />
+                                                        </div>
+                                                        <div className="text_block text_block--ellipsis">
+                                                            <Link
+                                                                href="/identity/[address]/epoch/[epoch]/validation"
+                                                                as={`/identity/${
+                                                                    item.address
+                                                                }/epoch/${
+                                                                    epoch + 1
+                                                                }/validation#longAnswers`}>
+                                                                <a>{item.address}</a>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {epoch && (
+                                                            <IdentityStatus
+                                                                epoch={epoch}
+                                                                address={item.address}
+                                                            />
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {item.flipAnswer !== 'None'
+                                                            ? (
+                                                                item.respAnswer === item.flipAnswer
+                                                                    ? (
+                                                                        <i className="icon icon--micro_success" />
+                                                                    )
+                                                                    : (
+                                                                        <i className="icon icon--micro_fail" />
+                                                                    )
+                                                            )
+                                                            : (
+                                                                ''
+                                                            )}
+                                                        {item.respAnswer === 'None'
+                                                            ? 'No answer'
+                                                            : item.respAnswer}
+                                                    </td>
+                                                    <td>
+                                                        {item.respAnswer === 'None'
+                                                            ? '-'
+                                                            : item.respWrongWords
+                                                                ? 'Reported'
+                                                                : '-'}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -516,68 +498,69 @@ function Flip () {
                                             <th>Identity</th>
                                             <th style={{ width: 190 }}>
                                                 <TooltipText tooltip="Identity status before the validation">
-                          Status
+                                                    Status
                                                 </TooltipText>
                                             </th>
                                             <th style={{ width: 140 }}>
                                                 <TooltipText tooltip="Answer given on qualification session">
-                          Answer
+                                                    Answer
                                                 </TooltipText>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {flip &&
-                      shortAnswers &&
-                      shortAnswers.map((item) => (
-                          <tr>
-                              <td>
-                                  <div className="user-pic">
-                                      <img
-                                          src={`https://robohash.idena.io/${item.address.toLowerCase()}`}
-                                          alt="pic"
-                                          width="32"
-                                      />
-                                  </div>
-                                  <div className="text_block text_block--ellipsis">
-                                      <Link
-                                          href="/identity/[address]/epoch/[epoch]/validation"
-                                          as={`/identity/${item.address}/epoch/${
-                                              epoch + 1
-                                          }/validation#shortAnswers`}
-                                      >
-                                          <a>{item.address}</a>
-                                      </Link>
-                                  </div>
-                              </td>
-                              <td>
-                                  {epoch && (
-                                      <IdentityStatus
-                                          epoch={epoch}
-                                          address={item.address}
-                                      />
-                                  )}
-                              </td>
-                              <td>
-                                  {item.flipAnswer !== 'None'
-                                      ? (
-                                          item.respAnswer === item.flipAnswer
-                                              ? (
-                                                  <i className="icon icon--micro_success" />
-                                              )
-                                              : (
-                                                  <i className="icon icon--micro_fail" />
-                                              )
-                                      )
-                                      : (
-                                          ''
-                                      )}
-                                  {item.respAnswer === 'None'
-                                      ? 'No answer'
-                                      : item.respAnswer}
-                              </td>
-                          </tr>
-                      ))}
+                                            shortAnswers &&
+                                            shortAnswers.map((item) => (
+                                                <tr>
+                                                    <td>
+                                                        <div className="user-pic">
+                                                            <img
+                                                                src={`https://robohash.idena.io/${item.address.toLowerCase()}`}
+                                                                alt="pic"
+                                                                width="32"
+                                                            />
+                                                        </div>
+                                                        <div className="text_block text_block--ellipsis">
+                                                            <Link
+                                                                href="/identity/[address]/epoch/[epoch]/validation"
+                                                                as={`/identity/${
+                                                                    item.address
+                                                                }/epoch/${
+                                                                    epoch + 1
+                                                                }/validation#shortAnswers`}>
+                                                                <a>{item.address}</a>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {epoch && (
+                                                            <IdentityStatus
+                                                                epoch={epoch}
+                                                                address={item.address}
+                                                            />
+                                                        )}
+                                                    </td>
+                                                    <td>
+                                                        {item.flipAnswer !== 'None'
+                                                            ? (
+                                                                item.respAnswer === item.flipAnswer
+                                                                    ? (
+                                                                        <i className="icon icon--micro_success" />
+                                                                    )
+                                                                    : (
+                                                                        <i className="icon icon--micro_fail" />
+                                                                    )
+                                                            )
+                                                            : (
+                                                                ''
+                                                            )}
+                                                        {item.respAnswer === 'None'
+                                                            ? 'No answer'
+                                                            : item.respAnswer}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>

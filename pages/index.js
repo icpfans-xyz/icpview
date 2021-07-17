@@ -116,7 +116,7 @@ export default function Home () {
                                                 hashReady && (hash === DEFAULT_TAB || hash === '')
                                             }
                                             href={DEFAULT_TAB}>
-                                            <h3>最新交易</h3>
+                                            <h3>最新ICP转账交易</h3>
                                         </NavLink>
                                     </NavItem>
 

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-01 11:42:41
- * @LastEditTime: 2021-07-05 00:36:22
+ * @LastEditTime: 2021-07-18 01:06:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/next.config.js
