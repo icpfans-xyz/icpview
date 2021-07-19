@@ -15,11 +15,11 @@ $primary: #0278ff;
 @import 'common/variables';
 @import 'partials/functions';
 @import 'partials/overrides';
-@import 'partials/icons';
-@import 'partials/fonts';
+@import 'partials/footer';
+@import 'partials/fonts.scss';
+@import 'partials/icons.scss';
 @import 'partials/header';
 @import 'partials/social';
-@import 'partials/footer';
 @import 'partials/sections';
 
 a {
