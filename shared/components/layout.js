@@ -91,8 +91,8 @@ function Layout ({ children, title = '', signinLoading = false }) {
             <Helmet>
                 <title>{title}</title>
             </Helmet>
-            <TopHeader />
-            <header className="header">
+            {/* <TopHeader /> */}
+            <header className="header" style={{ marginTop: 30 }}>
                 <div className="container">
                     <div className="row justify-content-between align-items-center">
                         <div className="col-auto">
@@ -103,7 +103,7 @@ function Layout ({ children, title = '', signinLoading = false }) {
                                     <img
                                         src="/static/images/icpview_logo.png"
                                         alt="Idena"
-                                        width="100px"
+                                        width="160px"
                                     />
                                 </a>
                             </div>
