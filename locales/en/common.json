@@ -1,0 +1,16 @@
+{
+    "selectLng": "Choose a language",
+    "zh":"简体中文",
+    "en":"English",
+    "blocks":"Blocks",
+    "totalBlocks":"Blocks",
+    "blockRate":"Block Rate",
+    "blockRateTips":"Block/second",
+    "messages":"Messages",
+    "totalMessages":"Total Messages",
+    "messagesRate":"Message Rate",
+    "nodes":"Nodes",
+    "nodeCount":"Total Nodes",
+    "searchText":"Account ID, Transaction Hash",
+    "latestICPTx":"Latest ICP Txs"
+}

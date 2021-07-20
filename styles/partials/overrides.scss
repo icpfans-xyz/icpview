@@ -243,7 +243,7 @@ p {
 
 .btn-primary {
   background-color: $white;
-  color: $primary !important;
+  // color: $primary !important;
 
   &:hover {
     background-color: $white;
@@ -659,6 +659,49 @@ p {
 
 .user-avatar {
   cursor: pointer;
+}
+
+.dropdown {
+  .btn-primary.dropdown-toggle {
+    padding: .7rem 1.5rem;
+  }
+  .btn-primary.dropdown-toggle:hover {
+    color: $text;
+  }
+
+  .btn-primary:focus, .btn-primary:active {
+    color: $text !important;
+  }
+  .dropdown-item {
+    font-size: 0.875rem;
+    padding: .5rem 1.5rem;
+    
+    a {
+      color: $grey;
+    }
+  }
+}
+
+.dropdown.show {
+  .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary.dropdown-toggle {
+    color: $text;
+    background-color: $white;
+    border-color: $white;
+  }
+
+  .btn-primary.dropdown-toggle:hover {
+    color: $text;
+  }
+
+  .btn-primary:focus, .btn-primary:active {
+    color: $text !important;
+  }
+
+  .dropdown-item {
+    a {
+      color: $grey;
+    }
+  }
 }
 
 .dropdown-menu {

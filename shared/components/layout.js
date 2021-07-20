@@ -4,24 +4,24 @@ import {
     // DropdownToggle,
     // UncontrolledButtonDropdown
 } from 'reactstrap'
+
+import useTranslation from 'next-translate/useTranslation'
+
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 // import { getCrc32 } from '@dfinity/principal/lib/cjs/utils/getCrc'
-import ReactGA from 'react-ga'
+// import ReactGA from 'react-ga'
 // import Link from 'next/link'
-import {
-    isAccountOrTransaction,
-    isAccount
-} from '../utils/utils'
-import { Helmet } from 'react-helmet'
+import { isAccountOrTransaction, isAccount } from '../utils/utils'
+import Head from 'next/head'
 // import { search } from '../api'
 // import { useSession } from '../utils/session-context'
 import TopHeader from './topheader'
+import LangSelect from './langSelect'
 
-function Layout ({ children, title = '', signinLoading = false }) {
+function Layout({ children, title = '', signinLoading = false }) {
+    const { t } = useTranslation('common')
     const router = useRouter()
-    ReactGA.initialize('UA-139651161-2')
-    ReactGA.pageview(router.asPath)
 
     // const { session, logout } = useSession()
     const [state, setState] = useState({
@@ -88,9 +88,9 @@ function Layout ({ children, title = '', signinLoading = false }) {
 
     return (
         <>
-            <Helmet>
+            <Head>
                 <title>{title}</title>
-            </Helmet>
+            </Head>
             <TopHeader />
             <header className="header">
                 <div className="container">
@@ -98,12 +98,11 @@ function Layout ({ children, title = '', signinLoading = false }) {
                         <div className="col-auto">
                             <div className="header_logo">
                                 <a className="" href="/">
-                                    <span>
-                                    </span>
+                                    <span></span>
                                     <img
                                         src="/static/images/icpview_logo.png"
                                         alt="Idena"
-                                        width="100px"
+                                        width="168px"
                                     />
                                 </a>
                             </div>
@@ -122,7 +121,7 @@ function Layout ({ children, title = '', signinLoading = false }) {
                                     <input
                                         value={state.value}
                                         type="search"
-                                        placeholder="账户ID, 交易哈希, 区块..."
+                                        placeholder={t('searchText')}
                                         className="form-control"
                                         onChange={(e) =>
                                             setState({
@@ -134,6 +133,9 @@ function Layout ({ children, title = '', signinLoading = false }) {
                                     />
                                 </div>
                             </form>
+                        </div>
+                        <div className="col-auto">
+                            <LangSelect />
                         </div>
 
                         {/* <div className="col-auto">

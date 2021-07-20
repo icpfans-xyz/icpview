@@ -1,12 +1,4 @@
-/*
- * @Author: your name
- * @Date: 2021-07-01 11:42:41
- * @LastEditTime: 2021-07-14 02:48:49
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/screens/index/components/supply.js
- */
-// import Link from 'next/link'
+import useTranslation from 'next-translate/useTranslation'
 import { useEffect, useState } from 'react'
 import { getNodesCount } from '../../../shared/api'
 // import { precise1, dnaFmt } from '../../../shared/utils/utils'
@@ -18,11 +10,13 @@ const initialState = {
     nodesCount: '-'
 }
 
-export default function Supply () {
+export default function MessagePanel() {
+    const { t } = useTranslation('common')
+
     const [state, setState] = useState(initialState)
 
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             const res = await getNodesCount()
             setState({
                 nodesCount: res.ic_nodes_count[0][1]
@@ -33,7 +27,7 @@ export default function Supply () {
 
     return (
         <div className="col-12 col-sm-6">
-            <h1>消息</h1>
+            <h1>{t('common:messages')}</h1>
             <div className="card">
                 <div className="info_block">
                     <div className="row">
@@ -42,19 +36,17 @@ export default function Supply () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="当前总消息数"
-                            >
-                                当前总消息数
+                                tooltip={t('totalMessages')}>
+                                {t('totalMessages')}
                             </TooltipText>
                         </div>
                         <div className="col-12 col-sm-4 bordered-col">
                             <MessageRate />
                             <TooltipText
-                                tooltip="消息数/每秒"
+                                tooltip={t('messagesRate')}
                                 className="control-label"
-                                data-toggle="tooltip"
-                            >
-                                当前消息速度
+                                data-toggle="tooltip">
+                                {t('messagesRate')}
                             </TooltipText>
                         </div>
                         <div className="col-12 col-sm-4 bordered-col">
@@ -62,9 +54,8 @@ export default function Supply () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="ICP网络节点数"
-                            >
-                                当前节点数
+                                tooltip={t('nodeCount')}>
+                                {t('nodeCount')}
                             </TooltipText>
                         </div>
                     </div>

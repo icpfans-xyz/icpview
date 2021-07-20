@@ -7,6 +7,7 @@
 // getEpochsData,
 // getBlockRate
 // } from '../../../shared/api'
+import useTranslation from 'next-translate/useTranslation'
 import TooltipText from '../../../shared/components/tooltip'
 import Blocks from './blocks'
 import BlockRate from './blockRate'
@@ -17,7 +18,7 @@ import BlockRate from './blockRate'
 //     total: '-'
 // }
 
-export default function Identities () {
+export default function BlockPanel() {
     // const [state, setState] = useState(initialState)
     // // const [chartData, setChartData] = useState([
     // //     { name: 0, value: 0 },
@@ -85,9 +86,11 @@ export default function Identities () {
     //     return null
     // }
 
+    const { t } = useTranslation('common')
+
     return (
         <div className="col-12 col-sm-6">
-            <h1>区块</h1>
+            <h1>{t('blocks')}</h1>
             <div className="card">
                 <div className="info_block">
                     <div className="row">
@@ -96,9 +99,8 @@ export default function Identities () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="当前出块数量"
-                            >
-                                当前出块数量
+                                tooltip={t('totalBlocks')}>
+                                {t('totalBlocks')}
                             </TooltipText>
                             {/* <div style={{width: '100%', height: '2.43rem'}}> */}
                             {/* <ResponsiveContainer>
@@ -116,16 +118,6 @@ export default function Identities () {
                   </AreaChart>
                 </ResponsiveContainer> */}
                             {/* </div> */}
-
-                            <TooltipText
-                                className="control-label hide-border"
-                                data-toggle="tooltip"
-                                tooltip="查看更多网络状态 https://internetcomputer.org/"
-                            >
-                                {/* <a href="https://idena.today" target="blank">
-                  Network stats &rsaquo;
-                </a> */}
-                            </TooltipText>
                         </div>
 
                         <div className="col-12 col-sm-6 bordered-col">
@@ -133,9 +125,8 @@ export default function Identities () {
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip="出块数/每秒"
-                            >
-                                当前出块速度
+                                tooltip={t('blockRateTips')}>
+                                {t('blockRate')}
                             </TooltipText>
                         </div>
                     </div>
