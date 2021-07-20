@@ -16,7 +16,7 @@ import {
 import { Helmet } from 'react-helmet'
 // import { search } from '../api'
 // import { useSession } from '../utils/session-context'
-import TopHeader from './topheader'
+// import TopHeader from './topheader'
 
 function Layout ({ children, title = '', signinLoading = false }) {
     const router = useRouter()

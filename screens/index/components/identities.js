@@ -10,7 +10,7 @@
 import TooltipText from '../../../shared/components/tooltip'
 import Blocks from './blocks'
 import BlockRate from './blockRate'
-
+import { useTranslation } from 'next-i18next'
 // const initialState = {
 //     epoch: 0,
 //     online: '-',
@@ -18,6 +18,7 @@ import BlockRate from './blockRate'
 // }
 
 export default function Identities () {
+    const { t } = useTranslation('common')
     // const [state, setState] = useState(initialState)
     // // const [chartData, setChartData] = useState([
     // //     { name: 0, value: 0 },
@@ -87,7 +88,7 @@ export default function Identities () {
 
     return (
         <div className="col-12 col-sm-6">
-            <h1>区块</h1>
+            <h1>{t('block')}</h1>
             <div className="card">
                 <div className="info_block">
                     <div className="row">
