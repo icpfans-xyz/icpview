@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-01 11:42:41
- * @LastEditTime: 2021-07-27 11:27:17
+ * @LastEditTime: 2021-07-27 14:18:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/icpview/shared/components/tooltip.js
@@ -19,7 +19,6 @@ export default function TooltipText({
     const [tooltipOpen, setTooltipOpen] = useState(false)
 
     const ref = useRef(null)
-    console.log(ref)
     return (
         <>
             <span ref={ref} {...props}>

@@ -8,12 +8,9 @@ import { PageLoading, PageError } from '../../shared/components/loading'
 import RosettaApi, { RosettaError } from '../api/rosetta/RosettaApi'
 import {
     getIcpStringFromE8s,
-    dnaFmt,
     dateTimeFmt
-    // epochFmt
-    // txTypeFmt
 } from '../..//shared/utils/utils'
-
+import Tooltip from '../../screens/epoch/components/tooltip'
 const initState = {
     icpToUsd: null,
     isLoading: false,
@@ -116,23 +113,18 @@ function TxDetails(data) {
 
                             <hr />
                             <div className="control-label">发送方:</div>
-
-                            <div
-                                className="text_block text_block--ellipsis"
-                                style={{ width: '80%' }}
-                            >
-                                <Link href="/address/[address]" as={`/address/${data.account1Address}`}>
-                                    <a>
-                                        {/* <img
-                                            className="user-pic"
-                                            src={`https://robohash.idena.io/${data.from.toLowerCase()}`}
-                                            alt="pic"
-                                            width="32"
-                                        /> */}
-                                        <span>{data.account1Address}</span>
-                                    </a>
-                                </Link>
-                            </div>
+                            <Tooltip text={data.account1Address}>
+                                <div
+                                    className="text_block text_block--ellipsis"
+                                    style={{ width: '80%' }}
+                                >
+                                    <Link href="/address/[address]" as={`/address/${data.account1Address}`}>
+                                        <a>
+                                            <span>{data.account1Address}</span>
+                                        </a>
+                                    </Link>
+                                </div>
+                            </Tooltip>
 
                             <hr />
                             <div className="control-label">数量:</div>
@@ -143,20 +135,6 @@ function TxDetails(data) {
                             <hr />
                             <div className="control-label">Memo:</div>
                             <div className="text_block">{Number(data.memo, ' ')}</div>
-                            {/* {data.txReceipt && (
-                                <>
-                                    <hr />
-                                    <div className="control-label">Smart contract call:</div>
-                                    <div
-                                        className="text_block"
-                                        style={{
-                                            color: `${data.txReceipt.success ? 'inherit' : 'red'}`
-                                        }}
-                                    >
-                                        {data.txReceipt.success ? 'Success' : 'Error'}
-                                    </div>
-                                </>
-                            )} */}
                         </div>
                     </div>
                     <div className="col-12 col-sm-6">
@@ -171,23 +149,25 @@ function TxDetails(data) {
 
                             <hr />
                             <div className="control-label">接收方:</div>
+                            <Tooltip text={data.account2Address}>
+                                <div
+                                    className="text_block text_block--ellipsis"
+                                    style={{ width: '80%' }}
+                                >
+                                    {data.account2Address
+                                        ? (
+                                            <Link href="/address/[address]" as={`/address/${data.account2Address}`}>
+                                                <a>
+                                                    <span>{data.account2Address}</span>
+                                                </a>
+                                            </Link>
+                                        )
+                                        : (
+                                            '-'
+                                        )}
+                                </div>
 
-                            <div
-                                className="text_block text_block--ellipsis"
-                                style={{ width: '80%' }}
-                            >
-                                {data.account2Address
-                                    ? (
-                                        <Link href="/address/[address]" as={`/address/${data.account2Address}`}>
-                                            <a>
-                                                <span>{data.account2Address}</span>
-                                            </a>
-                                        </Link>
-                                    )
-                                    : (
-                                        '-'
-                                    )}
-                            </div>
+                            </Tooltip>
                             <hr />
                             <div className="control-label">Fee paid:</div>
                             {/* <div className="text_block">{dnaFmt(getIcpStringFromE8s(data.fee), ' ICP')}</div> */}

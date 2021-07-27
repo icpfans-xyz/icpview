@@ -21,6 +21,7 @@ $primary: #0278ff;
 @import 'partials/header';
 @import 'partials/social';
 @import 'partials/sections';
+@import 'partials/tooltip';
 
 a {
   transition: color $transition;

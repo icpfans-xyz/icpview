@@ -1,5 +1,5 @@
 import Link from 'next/link'
-// import { useInfiniteQuery, useQuery } from 'react-query'
+// import { useQuery } from 'react-query'
 import { useEffect, useState } from 'react'
 import { timeSince, getIcpStringFromE8s, dnaFmt, txTypeFmt } from '../../../shared/utils/utils'
 import { RosettaError, RosettaErrorType } from '../../../pages/api/rosetta/RosettaApi'
@@ -9,7 +9,9 @@ import { RosettaError, RosettaErrorType } from '../../../pages/api/rosetta/Roset
 //     getEpochTransactionsCount
 // } from '../../../shared/api'
 import { SkeletonRows } from '../../../shared/components/skeleton'
-import TooltipText from '../../../shared/components/tooltip'
+// import TooltipText from '../../../shared/components/tooltip'
+import Tooltip from './tooltip'
+// import { Tooltip } from 'reactstrap'
 
 const Transactions = ({
     getTransactions,
@@ -22,6 +24,10 @@ const Transactions = ({
 }) => {
     const [transactions, setTransactions] = useState([])
     const [rosettaError, setRosettaError] = useState(null)
+    // const { data, status } = useQuery('get', getTransactions)
+    // console.log(data, status)
+    // const [tooltipOpen, setTooltipOpen] = useState(false)
+    // const toggle = () => setTooltipOpen(!tooltipOpen)
     // const [data, setData] = useState([])
     useEffect(() => {
         const fetchData = async(offset) => {
@@ -72,7 +78,7 @@ const Transactions = ({
     return (
         errorMessage
             ? <div>{errorMessage}</div>
-            : <div className="table-responsive">
+            : <div className="table-responsive" style={{ overflow: 'visible' }}>
 
                 <table className="table">
                     <thead>
@@ -89,54 +95,40 @@ const Transactions = ({
                         {!visible || (status === 'loading' && <SkeletonRows cols={6} />)}
                         {transactions.map(
                             (item) => item && (<tr key={item.hash}>
-                                <td>
-                                    <div
-                                        className="text_block text_block--ellipsis"
-                                        style={{ width: 100 }}>
-                                        {/* <TooltipText
-                                            className="control-label"
-                                            data-toggle="tooltip"
-                                            tooltip={item.hash}>{item.hash}</TooltipText> */}
-                                        <Link
-                                            href="/transaction/[hash]"
-                                            as={`/transaction/${item.hash}`}>
-                                            <a>{item.hash}</a>
-                                        </Link>
 
-                                    </div>
+                                <td style={{ overflow: 'visible' }}>
+                                    <Tooltip text={item.hash}>
+                                        <div
+                                            className="text_block text_block--ellipsis"
+                                            style={{ width: 100 }}>
+                                            <Link
+                                                href="/transaction/[hash]"
+                                                as={`/transaction/${item.hash}`}>
+                                                <a>{item.hash}</a>
+
+                                            </Link>
+                                        </div>
+                                    </Tooltip>
                                 </td>
+
                                 <td>{timeSince(item.timestamp)}</td>
-                                <td>
-                                    <div className="user-pic">
-                                        {/* <img
-                                            src={`https://robohash.idena.io/${
-                                                item.from && item.from.toLowerCase()
-                                            }`}
-                                            alt="pic"
-                                            width="32"
-                                        /> */}
-                                    </div>
-                                    <div
-                                        className="text_block text_block--ellipsis"
-                                        style={{ width: 120 }}>
-                                        <Link
-                                            href="/address/[address]"
-                                            as={`/address/${item.account1Address}`}>
-                                            <a>{item.account1Address}</a>
-                                        </Link>
-                                    </div>
+                                <td style={{ overflow: 'visible' }}>
+                                    <Tooltip text={item.account1Address}>
+                                        <div
+                                            className="text_block text_block--ellipsis"
+                                            style={{ width: 120 }}>
+                                            <Link
+                                                href="/address/[address]"
+                                                as={`/address/${item.account1Address}`}>
+                                                <a>{item.account1Address}</a>
+                                            </Link>
+                                        </div>
+                                    </Tooltip>
                                 </td>
-                                <td>
+                                <td style={{ overflow: 'visible' }}>
                                     {item.account2Address
                                         ? (
-                                            <>
-                                                {/* <div className="user-pic">
-                                                    <img
-                                                        src={`https://robohash.idena.io/${item.to.toLowerCase()}`}
-                                                        alt="pic"
-                                                        width="32"
-                                                    />
-                                                </div> */}
+                                            <Tooltip text={item.account2Address}>
                                                 <div
                                                     className="text_block text_block--ellipsis"
                                                     style={{ width: 120 }}>
@@ -146,7 +138,7 @@ const Transactions = ({
                                                         <a>{item.account2Address}</a>
                                                     </Link>
                                                 </div>
-                                            </>
+                                            </Tooltip>
                                         )
                                         : (
                                             <div className="text_block text_block--ellipsis">-</div>
