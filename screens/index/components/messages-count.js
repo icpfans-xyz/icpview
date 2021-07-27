@@ -14,11 +14,11 @@ const initialState = {
     currentMsg: -1,
     prevMsg: -1
 }
-export default function MessageCount () {
+export default function MessageCount() {
     const [state, setState] = useState(initialState)
     const { currentMsg, prevMsg } = state
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             const res = await getMessageCount()
             const messageCount = parseInt(res.messages_count[0][1])
             if (messageCount > prevMsg) {

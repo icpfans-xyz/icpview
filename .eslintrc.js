@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-01 11:42:41
- * @LastEditTime: 2021-07-19 03:47:53
+ * @LastEditTime: 2021-07-20 22:59:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/.eslintrc.js
@@ -43,6 +43,7 @@ module.exports = {
         '@next/next/no-page-custom-font': 'off',
         'react/jsx-no-target-blank': [0],
         'react/display-name': [0],
+        'space-before-function-paren': ['error', 'never'],
         'jsx-a11y/anchor-is-valid': [
             0
             // {

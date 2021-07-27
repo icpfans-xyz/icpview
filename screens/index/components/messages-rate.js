@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-05 02:36:14
- * @LastEditTime: 2021-07-07 00:43:19
+ * @LastEditTime: 2021-07-20 23:01:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/screens/index/components/blocks.js
@@ -12,10 +12,10 @@ import { getMessageRate } from '../../../shared/api'
 const initialState = {
     messageRate: '-'
 }
-export default function MessageCount () {
+export default function MessageCount() {
     const [state, setState] = useState(initialState)
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             const res = await getMessageRate()
             const messageRate = parseFloat(res.message_execution_rate[0][1]).toFixed(2)
             setState(newState => {

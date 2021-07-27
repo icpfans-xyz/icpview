@@ -14,14 +14,14 @@ import {
     // getEpochRewardBounds
 } from '../api'
 
-export default function TopHeader () {
+export default function TopHeader() {
     const [marketData, setMarketData] = useState({
         price: 0,
         priceChange: 0,
         marketCap: 0
     })
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             const res = await Promise.all([getCoingeckoData(), getCoinMarketData()])
             const icp = res[0]['internet-computer']
             const icp2 = res[1].market_data
@@ -141,40 +141,6 @@ export default function TopHeader () {
                             blank
                         />
 
-                        {/* <Card
-              name="Epoch mining"
-              value={usdFmt(
-                precise1(
-                  (marketData.price * 25920 * epochData.epochDuration) /
-                    nodesData.onlineCount
-                )
-              )}
-              tooltip={`Epoch mining rewards per user (${epochData.epochDuration} days)`}
-            /> */}
-                        {/* <Card
-              name="Validation rewards"
-              value={
-                rewardsData.minRewardPaid &&
-                rewardsData.maxRewardPaid &&
-                marketData.price
-                  ? `${usdFmt(
-                      precise1(rewardsData.minRewardPaid * marketData.price)
-                    )} - ${usdFmt(
-                      precise1(rewardsData.maxRewardPaid * marketData.price)
-                    )}`
-                  : '-'
-              }
-              tooltip="Last validation rewards paid per user"
-              href={`/epoch/${epoch + 1}/rewards`}
-            /> */}
-                        {/* <Card
-              name="Rewards paid"
-              value={usdFmt(
-                Math.round(epochData.totalRewardsPaid * marketData.price)
-              )}
-              tooltip="Total rewards paid for last validation"
-              href={`/epoch/${epoch + 1}/rewards`}
-            /> */}
                         <Card
                             name="ICP 市值"
                             value={usdFmt(Math.round(marketData.marketCap))}
@@ -194,18 +160,6 @@ export default function TopHeader () {
                             tooltip="查看更多 ICP 流通量信息"
                             href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                         />
-                        {/* <Card
-              name="Network size"
-              value={nodesData.nodesCount}
-              change={
-                nodesData.nodesCount && epochData.prevNodesCount
-                  ? ((nodesData.nodesCount - epochData.prevNodesCount) /
-                      epochData.prevNodesCount) *
-                    100
-                  : undefined
-              }
-              tooltip="Total nodes | Change since last validation"
-            /> */}
                     </div>
                 </div>
             </div>
@@ -213,7 +167,7 @@ export default function TopHeader () {
     )
 }
 
-function Card ({ name, value, tooltip = '', change = '', href = '', blank = false }) {
+function Card({ name, value, tooltip = '', change = '', href = '', blank = false }) {
     const changeValue = Math.abs(Math.round(change * 10) / 10)
     return (
         <TooltipText tooltip={tooltip}>

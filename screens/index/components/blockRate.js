@@ -12,10 +12,10 @@ import { getBlockRate } from '../../../shared/api'
 const initialState = {
     blockRate: '-'
 }
-export default function BlockRate () {
+export default function BlockRate() {
     const [state, setState] = useState(initialState)
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             const res = await getBlockRate()
             const blockRate = parseFloat(res.block_rate[0][1]).toFixed(2)
             setState(newState => {

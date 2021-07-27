@@ -1,14 +1,14 @@
 import BigNumber from 'bignumber.js'
 import { getCrc32 } from '@dfinity/principal/lib/cjs/utils/getCrc'
 
-export function precise1 (x) {
+export function precise1(x) {
     return Math.round(x * 10) / 10
 }
 
-export function precise2 (x) {
+export function precise2(x) {
     return Math.round(x * 100) / 100
 }
-export function getIcpStringFromE8s (icpE8s, shouldRound) {
+export function getIcpStringFromE8s(icpE8s, shouldRound) {
     let icp
     if (icpE8s instanceof BigNumber) {
         icp = shouldRound
@@ -19,24 +19,37 @@ export function getIcpStringFromE8s (icpE8s, shouldRound) {
     }
     return icp.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 8 })
 }
-export function precise6 (x) {
+
+export function getIcpStringFromE10s(icpE10s, shouldRound) {
+    let icp
+    if (icpE10s instanceof BigNumber) {
+        icp = shouldRound
+            ? icpE10s.dividedToIntegerBy(1000000000000).toNumber()
+            : icpE10s.div(1000000000000).toNumber()
+    } else {
+        icp = shouldRound ? Math.round(icpE10s / 1000000000000) : icpE10s / 1000000000000
+    }
+    return icp.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+}
+
+export function precise6(x) {
     return Math.round(x * 1000000) / 1000000
 }
-export function precise8 (x) {
+export function precise8(x) {
     return Math.round(x * 100000000) / 100000000
 }
 
-export function dnaFmt (amount, curency = ' iDNA') {
+export function dnaFmt(amount, curency = ' iDNA') {
     if (!amount || amount === 0) return '-'
     return `${Number(amount).toLocaleString()}${curency}`
 }
 
-export function usdFmt (amount, curency = '$') {
+export function usdFmt(amount, curency = '$') {
     if (!amount || amount === 0) return '-'
     return `${curency}${Number(amount).toLocaleString()}`
 }
 
-export function txTypeFmt (txType, data) {
+export function txTypeFmt(txType, data) {
     if (txType === 'OnlineStatusTx') {
         return `Mining status ${data ? (data.becomeOnline ? 'On' : 'Off') : 'switching'}`
     }
@@ -54,7 +67,7 @@ export function txTypeFmt (txType, data) {
     return txType
 }
 
-export function epochFmt (epoch) {
+export function epochFmt(epoch) {
     const str = `${epoch}`
     const l = str.length
     if (l === 1) return `#000${epoch}`
@@ -64,7 +77,7 @@ export function epochFmt (epoch) {
     return ''
 }
 
-export function lastSeenFmt (str) {
+export function lastSeenFmt(str) {
     const lastSeenDate = new Date(str)
     const now = new Date()
     const diff = Math.ceil(Math.abs(lastSeenDate.getTime() - now.getTime()) / 1000)
@@ -76,13 +89,13 @@ export function lastSeenFmt (str) {
     if (diff >= 3600) return 'More than 1 hour'
 }
 
-export function identityStatusFmt (s) {
+export function identityStatusFmt(s) {
     if (!s) return ''
     if (s === 'Undefined') return 'Not validated'
     return s
 }
 
-export function timeSince (str, addBreak = false) {
+export function timeSince(str, addBreak = false) {
     const timeStamp = new Date(str)
     const now = new Date()
     const secondsPast = Math.round((now.getTime() - timeStamp) / 1000)
@@ -98,26 +111,26 @@ export function timeSince (str, addBreak = false) {
     }
 }
 
-export function dateFmt (str) {
+export function dateFmt(str) {
     const dt = new Date(str)
     return dt.toLocaleDateString()
 }
 
-export function timeFmt (str) {
+export function timeFmt(str) {
     const dt = new Date(str)
     return dt.toLocaleTimeString(undefined, {
         hour12: false
     })
 }
 
-export function dateTimeFmt (str) {
+export function dateTimeFmt(str) {
     const dt = new Date(str)
     return `${dt.toLocaleDateString()} ${dt.toLocaleTimeString(undefined, {
         hour12: false
     })}`
 }
 
-export function rewardTypeFmt (s) {
+export function rewardTypeFmt(s) {
     if (!s) return ''
     if (s === 'Invitations') return 'Invitation (1st validation)'
     if (s === 'Invitations2') return 'Invitation (2nd validation)'
@@ -127,12 +140,12 @@ export function rewardTypeFmt (s) {
     return s
 }
 
-export function flipQualificationStatusFmt (status) {
+export function flipQualificationStatusFmt(status) {
     if (status === 'QualifiedByNone') return 'Not available'
     return status
 }
 
-export function iconToSrc (icon) {
+export function iconToSrc(icon) {
     const buffArray = new Uint8Array(
         icon
             .substring(2)
@@ -142,11 +155,11 @@ export function iconToSrc (icon) {
     return URL.createObjectURL(new Blob([buffArray], { type: 'image/jpeg' }))
 }
 
-export function isIdentityPassed (state) {
+export function isIdentityPassed(state) {
     return state === 'Newbie' || state === 'Verified' || state === 'Human'
 }
 
-export function hexToObject (hex) {
+export function hexToObject(hex) {
     try {
         return JSON.parse(new TextDecoder().decode(Buffer.from(hex.substring(2), 'hex')))
     } catch {

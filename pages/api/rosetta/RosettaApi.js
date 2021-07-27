@@ -29,7 +29,7 @@ export class RosettaError extends Error {
      * @param {String} message An error message describing the error.
      * @param {Number} status number The HTTP response status.
      */
-    constructor (message, status) {
+    constructor(message, status) {
         super(message)
         switch (status) {
         case 408:
@@ -55,7 +55,7 @@ export class Transaction {
      * @param {Number} blockIndex The index of the block containing the transaction.
      * milliseconds since the Unix Epoch.
      */
-    constructor (rosettaTransaction, blockIndex) {
+    constructor(rosettaTransaction, blockIndex) {
         this.blockIndex = blockIndex
         this.hash = rosettaTransaction.transaction_identifier.hash
         const timestampMs = rosettaTransaction.metadata.timestamp.div(1000000).toNumber()
@@ -96,7 +96,7 @@ export default class RosettaApi {
     /**
      * Create a RosettaApi.
      */
-    constructor () {
+    constructor() {
         this.axios = axios.create({
             baseURL: 'https://rosetta-api.internetcomputer.org/',
             method: 'post',
@@ -105,11 +105,11 @@ export default class RosettaApi {
             headers: { 'Content-Type': 'application/json;charset=utf-8' }
         })
 
-        this.networkIdentifier = this.networksList().then((res) =>
-            res.network_identifiers.find(
+        this.networkIdentifier = this.networksList().then((res) => {
+            return res.network_identifiers.find(
                 (networkIdentifier) => networkIdentifier.blockchain === 'Internet Computer'
             )
-        )
+        })
     }
 
     /**
@@ -118,7 +118,7 @@ export default class RosettaApi {
      * @returns {Promise<BigNumber|RosettaError>} The ICP account balance of the specified account, or
      * a RosettaError for error.
      */
-    async getAccountBalance (accountAddress) {
+    async getAccountBalance(accountAddress) {
         try {
             const response = await this.accountBalanceByAddress(accountAddress)
             return new BigNumber(response.balances[0].value)
@@ -135,7 +135,7 @@ export default class RosettaApi {
      * Return the latest block index.
      * @returns {Promise<number>} The latest block index, or a RosettaError for error.
      */
-    async getLastBlockIndex () {
+    async getLastBlockIndex() {
         try {
             const response = await this.networkStatus()
             return response.current_block_identifier.index
@@ -151,7 +151,7 @@ export default class RosettaApi {
      * @returns {Transaction|null} The Transaction object with the specified hash, or a RosettaError
      * for error.
      */
-    async getTransaction (transactionHash) {
+    async getTransaction(transactionHash) {
         try {
             const responseTransactions = await this.transactionsByHash(transactionHash)
             if (responseTransactions.transactions.length === 0) {
@@ -181,7 +181,7 @@ export default class RosettaApi {
      * @returns {Promise<Array<Transaction>|null>} An array of Transaction objects, or a RosettaError
      * for error.
      */
-    async getTransactions (limit, maxBlockIndex, offset) {
+    async getTransactions(limit, maxBlockIndex, offset) {
         try {
             // This function can be simplified once /search/transactions supports using the properties
             // max_block, offset, and limit.
@@ -213,7 +213,7 @@ export default class RosettaApi {
      * @returns {Promise<Array<Transaction>|null>} An array of Transaction objects, or a RosettaError
      * for error.
      */
-    async getTransactionsByAccount (accountAddress, params = {}) {
+    async getTransactionsByAccount(accountAddress, params = {}) {
         try {
             const response = await this.transactionsByAccount(accountAddress, params)
             const transactions = await Promise.all(
@@ -240,7 +240,7 @@ export default class RosettaApi {
      * @returns {Promise<Transaction>} The Transaction corresponding to the specified block index.
      * @private
      */
-    async getTransactionByBlock (blockIndex) {
+    async getTransactionByBlock(blockIndex) {
         const response = await this.blockByIndex(blockIndex)
         return new Transaction(response.block.transactions[0], blockIndex)
     }
@@ -252,7 +252,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async request (url, data) {
+    async request(url, data) {
         return (await this.axios.request({ url: url, data: data })).data
     }
 
@@ -262,7 +262,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    networksList () {
+    networksList() {
         return this.request('/network/list', {})
     }
 
@@ -271,7 +271,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async networkStatus () {
+    async networkStatus() {
         const networkIdentifier = await this.networkIdentifier
         return this.request('/network/status', {
             network_identifier: networkIdentifier
@@ -284,7 +284,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async accountBalanceByAddress (accountAddress) {
+    async accountBalanceByAddress(accountAddress) {
         const networkIdentifier = await this.networkIdentifier
         return this.request('/account/balance', {
             network_identifier: networkIdentifier,
@@ -299,7 +299,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async blockByIndex (blockIndex) {
+    async blockByIndex(blockIndex) {
         const networkIdentifier = await this.networkIdentifier
         return this.request('/block', {
             network_identifier: networkIdentifier,
@@ -314,7 +314,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async transactionsByAccount (accountAddress, params = {}) {
+    async transactionsByAccount(accountAddress, params = {}) {
         const networkIdentifier = await this.networkIdentifier
         return this.request('/search/transactions', {
             network_identifier: networkIdentifier,
@@ -329,7 +329,7 @@ export default class RosettaApi {
      * @returns {Promise<any>} The response body that was provided by the server.
      * @private
      */
-    async transactionsByHash (transactionHash) {
+    async transactionsByHash(transactionHash) {
         const networkIdentifier = await this.networkIdentifier
         return this.request('/search/transactions', {
             network_identifier: networkIdentifier,

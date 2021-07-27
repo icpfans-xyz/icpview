@@ -1,9 +1,12 @@
-// import Link from 'next/link'
+import useTranslation from 'next-translate/useTranslation'
+
 import { NavItem, NavLink, TabPane, TabContent } from 'reactstrap'
 // import { useQuery } from 'react-query'
 import { useEffect, useState } from 'react'
-import Supply from '../screens/index/components/supply'
-import Identities from '../screens/index/components/identities'
+import BlockPanel from '../screens/index/components/BlockPanel'
+import MessagePanel from '../screens/index/components/MessagePanel'
+import MarketPanel from '../screens/index/components/MarketPanel'
+import NodePanel from '../screens/index/components/NodePanel'
 import Layout from '../shared/components/layout'
 // import EpochsTable from '../screens/index/components/epochs'
 // import TopAddress from '../screens/index/components/topaddress'
@@ -24,13 +27,16 @@ const initState = {
     transactionsCount: null,
     rosettaError: null
 }
-export default function Home () {
+
+const Home = () => {
+    const { t } = useTranslation()
+
     const { hash, setHash, hashReady } = useHash()
     useHashChange((hash) => setHash(hash))
     const [state, setState] = useState(initState)
     const { transactionsCount } = state
     const rosettaApi = new RosettaApi()
-    async function getTransactions (offset, limit) {
+    async function getTransactions(offset, limit) {
         const { transactionsCount } = state
         if (transactionsCount !== null) {
             const res = await rosettaApi.getTransactions(limit, transactionsCount - 1, offset)
@@ -41,11 +47,11 @@ export default function Home () {
     }
 
     const [pageIndex, setPageIndex] = useState(0)
-    function handelePage (page) {
+    function handelePage(page) {
         setPageIndex(pageIndex + page)
     }
     useEffect(() => {
-        async function getBlockIndex () {
+        async function getBlockIndex() {
             const rosettaApi = new RosettaApi()
             const maxBlockIndex = await rosettaApi.getLastBlockIndex()
             if (maxBlockIndex instanceof RosettaError) {
@@ -72,11 +78,12 @@ export default function Home () {
         <Layout>
             <section className="section section_info">
                 <div className="row">
-                    <Identities />
-                    <Supply />
+                    <MarketPanel />
+                    <BlockPanel />
+                    <MessagePanel />
+                    <NodePanel />
                 </div>
             </section>
-
             {/* <section className="section ">
                 <div className="button-group">
                     {isHardFork && (
@@ -103,7 +110,6 @@ export default function Home () {
                     </Link>
                 </div>
             </section> */}
-
             <section className="section section_tabs">
                 <div className="tabs">
                     <div className="section__header">
@@ -116,7 +122,7 @@ export default function Home () {
                                                 hashReady && (hash === DEFAULT_TAB || hash === '')
                                             }
                                             href={DEFAULT_TAB}>
-                                            <h3>最新ICP转账交易</h3>
+                                            <h3>{t('common:latestICPTx')}</h3>
                                         </NavLink>
                                     </NavItem>
 
@@ -237,3 +243,5 @@ export default function Home () {
         </Layout>
     )
 }
+
+export default Home

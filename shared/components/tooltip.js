@@ -1,8 +1,16 @@
+/*
+ * @Author: your name
+ * @Date: 2021-07-01 11:42:41
+ * @LastEditTime: 2021-07-27 11:27:17
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /icp-dao/Users/chenglei/work/icpview/shared/components/tooltip.js
+ */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useRef } from 'react'
 import { Tooltip } from 'reactstrap'
 
-export default function TooltipText ({
+export default function TooltipText({
     tooltip,
     children,
     placement = 'bottom',
@@ -11,6 +19,7 @@ export default function TooltipText ({
     const [tooltipOpen, setTooltipOpen] = useState(false)
 
     const ref = useRef(null)
+    console.log(ref)
     return (
         <>
             <span ref={ref} {...props}>
@@ -34,7 +43,7 @@ export default function TooltipText ({
     )
 }
 
-export function IconTooltip ({ tooltip, placement = 'bottom', ...props }) {
+export function IconTooltip({ tooltip, placement = 'bottom', ...props }) {
     const [tooltipOpen, setTooltipOpen] = useState(false)
 
     const ref = useRef(null)
@@ -55,7 +64,7 @@ export function IconTooltip ({ tooltip, placement = 'bottom', ...props }) {
     )
 }
 
-export function WarningTooltip ({ tooltip, placement = 'bottom', ...props }) {
+export function WarningTooltip({ tooltip, placement = 'bottom', ...props }) {
     const [tooltipOpen, setTooltipOpen] = useState(false)
 
     const ref = useRef(null)

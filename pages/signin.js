@@ -8,7 +8,7 @@ const LOADING = 'loading'
 const FAILED = 'failed'
 const SUCCESS = 'success'
 
-function Signin ({ baseUrl, callbackUrl, attempt }) {
+function Signin({ baseUrl, callbackUrl, attempt }) {
     const [state, setState] = useState(LOADING)
     // const {setSession} = useSession()
 

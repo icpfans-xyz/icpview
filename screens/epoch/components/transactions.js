@@ -3,12 +3,13 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { timeSince, getIcpStringFromE8s, dnaFmt, txTypeFmt } from '../../../shared/utils/utils'
 import { RosettaError, RosettaErrorType } from '../../../pages/api/rosetta/RosettaApi'
+
 // import {
 //     getEpochTransactions,
 //     getEpochTransactionsCount
 // } from '../../../shared/api'
 import { SkeletonRows } from '../../../shared/components/skeleton'
-import { WarningTooltip } from '../../../shared/components/tooltip'
+import TooltipText from '../../../shared/components/tooltip'
 
 const Transactions = ({
     getTransactions,
@@ -23,7 +24,7 @@ const Transactions = ({
     const [rosettaError, setRosettaError] = useState(null)
     // const [data, setData] = useState([])
     useEffect(() => {
-        const fetchData = async (offset) => {
+        const fetchData = async(offset) => {
             const _transactions = await getTransactions(offset, pageSize)
             if (transactions instanceof RosettaError) setRosettaError(transactions)
             else {
@@ -37,7 +38,7 @@ const Transactions = ({
     // const fetchTransactions = (_, epoch, continuationToken = null) =>
     //     getEpochTransactions(epoch, limit, continuationToken)
 
-    function fetchMore () {
+    function fetchMore() {
         handelePage(1)
     }
     // const { data, fetchMore, canFetchMore, status } = useInfiniteQuery(
@@ -92,11 +93,16 @@ const Transactions = ({
                                     <div
                                         className="text_block text_block--ellipsis"
                                         style={{ width: 100 }}>
+                                        {/* <TooltipText
+                                            className="control-label"
+                                            data-toggle="tooltip"
+                                            tooltip={item.hash}>{item.hash}</TooltipText> */}
                                         <Link
                                             href="/transaction/[hash]"
                                             as={`/transaction/${item.hash}`}>
                                             <a>{item.hash}</a>
                                         </Link>
+
                                     </div>
                                 </td>
                                 <td>{timeSince(item.timestamp)}</td>
@@ -161,13 +167,13 @@ const Transactions = ({
                                     )}
                                 </td>
                                 <td>
-                                    {item.txReceipt && !item.txReceipt.success && (
+                                    {/* {item.txReceipt && !item.txReceipt.success && (
                                         <WarningTooltip
                                             tooltip={`Smart contract failed: ${item.txReceipt.errorMsg}`}
                                             placement="top"
                                             style={{ marginRight: '5px' }}
                                         />
-                                    )}
+                                    )} */}
                                     {txTypeFmt(item.type, item.data)}
                                 </td>
                             </tr>

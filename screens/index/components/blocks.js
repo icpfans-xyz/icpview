@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-05 02:36:14
- * @LastEditTime: 2021-07-07 00:42:31
+ * @LastEditTime: 2021-07-20 23:00:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/screens/index/components/blocks.js
@@ -13,11 +13,11 @@ const initialState = {
     blockHeight: -1,
     prevBlockHeight: -1
 }
-export default function Blocks () {
+export default function Blocks() {
     const [state, setState] = useState(initialState)
     const { blockHeight, prevBlockHeight } = state
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             const { block } = await getBlocks()
             const newBlockHeight = parseInt(block[0][1])
             if (newBlockHeight > blockHeight) {

@@ -1,5 +1,13 @@
+/*
+ * @Author: your name
+ * @Date: 2021-07-01 11:42:41
+ * @LastEditTime: 2021-07-20 23:46:32
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /icp-dao/Users/chenglei/work/icpview/shared/components/skeleton.js
+ */
 /* eslint-disable react/jsx-props-no-spreading */
-export default function Skeleton ({ height, ...props }) {
+export default function Skeleton({ height, ...props }) {
     return (
         <div {...props}>
             <style jsx>{`
@@ -48,7 +56,7 @@ export default function Skeleton ({ height, ...props }) {
     )
 }
 
-export function SkeletonRows ({ rows = 15, cols }) {
+export function SkeletonRows({ rows = 15, cols }) {
     return (
         <>
             {[...Array(rows).keys()].map((i) => (

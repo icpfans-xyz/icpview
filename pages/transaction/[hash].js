@@ -20,7 +20,7 @@ const initState = {
     rosettaError: null,
     transaction: null
 }
-function Tx () {
+function Tx() {
     const router = useRouter()
     const hash = router.query.hash || ''
     const rosettaApi = new RosettaApi()
@@ -29,7 +29,7 @@ function Tx () {
     // const { data: txData, error, status } = useQuery(hash, getTransaction)
     // const { data: rawTxData } = useQuery(hash && `${hash}/raw`, getTransaction)
     useEffect(() => {
-        async function getData () {
+        async function getData() {
             setState({
                 icpToUsd: null,
                 isLoading: true,
@@ -93,7 +93,7 @@ function Tx () {
 
 export default Tx
 
-function TxDetails (data) {
+function TxDetails(data) {
     return (
         <section className="section section_details">
             <h3>详情</h3>
@@ -137,7 +137,7 @@ function TxDetails (data) {
                             <hr />
                             <div className="control-label">数量:</div>
                             <div className="text_block">
-                                {dnaFmt(data.amount, ' ICP')}
+                                {getIcpStringFromE8s(data.amount)} ICP
                             </div>
 
                             <hr />

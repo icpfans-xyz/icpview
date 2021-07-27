@@ -6,15 +6,18 @@
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/idena-explorer/next.config.js
  */
-const withSass = require('@zeit/next-sass')
-const withFonts = require('nextjs-fonts')
-const { i18n } = require('./next-i18next.config')
-module.exports = {
-    i18n,
-    // eslint: {
-    //     // Warning: Dangerously allow production builds to successfully complete even if
-    //     // your project has ESLint errors.
-    //     ignoreDuringBuilds: true,
-    // },
-    withSass: withSass(withFonts())
-}
+// const withSass = require('@zeit/next-sass')
+// const withFonts = require('nextjs-fonts')
+
+const nextTranslate = require('next-translate')
+
+// module.exports = {
+//     // eslint: {
+//     //     // Warning: Dangerously allow production builds to successfully complete even if
+//     //     // your project has ESLint errors.
+//     //     ignoreDuringBuilds: true,
+//     // },
+//     withSass: withSass(withFonts())
+// }
+
+module.exports = nextTranslate()
