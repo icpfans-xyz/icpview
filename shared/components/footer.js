@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 18:35:30
- * @LastEditTime: 2021-07-21 02:30:44
- * @LastEditors: your name
+ * @LastEditTime: 2021-07-28 00:05:10
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/icpview/shared/components/footer.js
  */
@@ -39,7 +39,11 @@ export default function Footer() {
                 </div>
                 <div className="row justify-content-center text-center">
                     <div className="col-md-7 col-lg-6">
-                        <div className="language row"></div>
+                        <div className="language row">
+                            <a target="_blank" href="https://icpfans.xyz/" style={{ color: '#000' }}>
+                                Made with <span style={{ color: '#f00' }}>♥</span> by ICPFans
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

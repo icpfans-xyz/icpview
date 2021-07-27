@@ -24,5 +24,17 @@
     "memoryTotal": "Memory Total",
     "subNetsTotal": "Subnets",
     "boundaryNodes": "Boundary Nodes",
-    "nodeProviders": "Node Providers"
+    "nodeProviders": "Node Providers",
+    "transactionHash": "Hash",
+    "senderId": "From",
+    "receiverId": "To",
+    "amount": "Amount",
+    "dateTime": "Timestamp",
+    "transactionType": "Type",
+    "memo": "Memo",
+    "detail": "Detail",
+    "address": "Address",
+    "transactions": "Transactions",
+    "balance": "Balance",
+    "showMore": "Show More"
 }

@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-07-20 18:35:30
- * @LastEditTime: 2021-07-20 21:55:45
- * @LastEditors: your name
+ * @LastEditTime: 2021-07-28 00:00:53
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/icpview/pages/_app.js
  */
@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import * as gtag from '../lib/gtag'
 
-import Header from '../shared/components/Header'
+import Header from '../shared/components/header'
 import Footer from '../shared/components/footer'
 import '../styles/index.scss'
 

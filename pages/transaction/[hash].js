@@ -6,6 +6,7 @@ import Layout from '../../shared/components/layout'
 // import { getTransaction } from '../../shared/api'
 import { PageLoading, PageError } from '../../shared/components/loading'
 import RosettaApi, { RosettaError } from '../api/rosetta/RosettaApi'
+import useTranslation from 'next-translate/useTranslation'
 import {
     getIcpStringFromE8s,
     dateTimeFmt
@@ -18,6 +19,7 @@ const initState = {
     transaction: null
 }
 function Tx() {
+    const { t } = useTranslation('common')
     const router = useRouter()
     const hash = router.query.hash || ''
     const rosettaApi = new RosettaApi()
@@ -74,7 +76,7 @@ function Tx() {
         <Layout title={`Transaction ${hash}`}>
             <section className="section">
                 <div className="section_main__group">
-                    <h1 className="section_main__title">交易哈希</h1>
+                    <h1 className="section_main__title">{t('transactionHash')}</h1>
                     <h3 className="section_main__subtitle">
                         <span>{hash}</span>
                     </h3>
@@ -91,9 +93,10 @@ function Tx() {
 export default Tx
 
 function TxDetails(data) {
+    const { t } = useTranslation('common')
     return (
         <section className="section section_details">
-            <h3>详情</h3>
+            <h3>{t('detail')}</h3>
             <div className="card">
                 <div className="row">
                     <div className="col-12 col-sm-6">
@@ -106,13 +109,13 @@ function TxDetails(data) {
                                 </Link> */}
                             </div>
                             <hr />
-                            <div className="control-label">状态:</div>
+                            <div className="control-label">{t('status')}:</div>
                             <div className="text_block">
                                 {data.status}
                             </div>
 
                             <hr />
-                            <div className="control-label">发送方:</div>
+                            <div className="control-label">{t('senderId')}:</div>
                             <Tooltip text={data.account1Address}>
                                 <div
                                     className="text_block text_block--ellipsis"
@@ -127,28 +130,28 @@ function TxDetails(data) {
                             </Tooltip>
 
                             <hr />
-                            <div className="control-label">数量:</div>
+                            <div className="control-label">{t('amount')}:</div>
                             <div className="text_block">
                                 {getIcpStringFromE8s(data.amount)} ICP
                             </div>
 
                             <hr />
-                            <div className="control-label">Memo:</div>
+                            <div className="control-label">{t('memo')}:</div>
                             <div className="text_block">{Number(data.memo, ' ')}</div>
                         </div>
                     </div>
                     <div className="col-12 col-sm-6">
                         <div className="section__group">
-                            <div className="control-label">创建时间:</div>
+                            <div className="control-label">{t('dateTime')}:</div>
                             <div className="text_block">{dateTimeFmt(data.timestamp)}</div>
                             <hr />
-                            <div className="control-label">交易类型:</div>
+                            <div className="control-label">{t('transactionType')}:</div>
                             <div className="text_block">
                                 {data.type}
                             </div>
 
                             <hr />
-                            <div className="control-label">接收方:</div>
+                            <div className="control-label">{t('receiverId')}:</div>
                             <Tooltip text={data.account2Address}>
                                 <div
                                     className="text_block text_block--ellipsis"

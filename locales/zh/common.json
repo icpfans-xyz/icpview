@@ -24,5 +24,17 @@
     "memoryTotal": "内存总量",
     "subNetsTotal": "子网数",
     "boundaryNodes": "边界节点数",
-    "nodeProviders": "节点供应商"
+    "nodeProviders": "节点供应商",
+    "transactionHash": "交易哈希",
+    "senderId": "发布方",
+    "receiverId": "接收方",
+    "amount": "数量",
+    "dateTime": "日期时间",
+    "transactionType": "类型",
+    "memo": "备注",
+    "detail": "详情",
+    "address": "账户ID",
+    "transactions": "交易",
+    "balance": "余额",
+    "showMore": "查看更多"
 }

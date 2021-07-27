@@ -5,11 +5,13 @@ import { useState, useEffect } from 'react'
 import { getIcpStringFromE8s, dateTimeFmt } from '../../../shared/utils/utils'
 import { getAccountTransactions } from '../../../shared/api'
 import { SkeletonRows } from '../../../shared/components/skeleton'
+import useTranslation from 'next-translate/useTranslation'
 // import { WarningTooltip } from '../../../shared/components/tooltip'
 
 const LIMIT = 25
 const intiState = { count: '-', rows: [], isLoading: false, error: null }
 export default function Transactions({ address, visible, setAddressInfo }) {
+    const { t } = useTranslation('common')
     const [state, setState] = useState(intiState)
     const [page, setPage] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -88,12 +90,12 @@ export default function Transactions({ address, visible, setAddressInfo }) {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>交易哈希</th>
-                        <th>发送方</th>
-                        <th>接收方</th>
-                        <th>数量</th>
-                        <th style={{ width: 100 }}>日期时间</th>
-                        <th style={{ width: 100 }}>类型</th>
+                        <th>{t('transactionHash')}</th>
+                        <th>{t('senderId')}</th>
+                        <th>{t('receiverId')}</th>
+                        <th>{t('amount')}</th>
+                        <th style={{ width: 100 }}>{t('dateTime')}</th>
+                        <th style={{ width: 100 }}>{t('transactionType')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,7 +188,7 @@ export default function Transactions({ address, visible, setAddressInfo }) {
             </table>
             <div className="text-center" style={{ display: state.rows && state.rows.length > 0 && (page + 1) * LIMIT < state.count ? 'block' : 'none' }}>
                 <button type="button" className="btn btn-small" onClick={() => handlePageing()}>
-                    查看更多 ({state.count < LIMIT ? state.count : (page + 1) * LIMIT} of{' '}
+                    {t('showMore')} ({state.count < LIMIT ? state.count : (page + 1) * LIMIT} of{' '}
                     {state.count})
                 </button>
             </div>

@@ -14,11 +14,12 @@ import Transactions from '../../screens/address/components/transactions'
 // import BalanceHistory from '../../screens/address/components/balances'
 import { useHash, useHashChange } from '../../shared/utils/useHashChange'
 import TooltipText from '../../shared/components/tooltip'
-
+import useTranslation from 'next-translate/useTranslation'
 const DEFAULT_TAB = '#transactions'
 const rosettaApi = new RosettaApi()
 // const intiState = { count: '-', rows: null, isLoading: false, error: null }
 function Address() {
+    const { t } = useTranslation('common')
     const router = useRouter()
     const { address } = router.query
 
@@ -43,7 +44,7 @@ function Address() {
         <Layout title={`Address ${address}`}>
             <section className="section">
                 <div className="section_main__group">
-                    <h1 className="section_main__title">账户ID</h1>
+                    <h1 className="section_main__title">{t('address')}</h1>
                     <h3 className="section_main__subtitle">
                         <span>{address}</span>
                     </h3>
@@ -70,7 +71,7 @@ function Address() {
                                                 hashReady && (hash === DEFAULT_TAB || hash === '')
                                             }
                                             href={DEFAULT_TAB}>
-                                            <h3>交易</h3>
+                                            <h3>{t('transactions')}</h3>
                                         </NavLink>
                                     </NavItem>
 
@@ -121,12 +122,13 @@ function Address() {
 }
 
 function AddressData({ addressInfo, identityInfo, contractInfo, poolInfo }) {
+    const { t } = useTranslation('common')
     return (
         <>
             <section className="section section_info">
                 <div className="row">
                     <div className="col-12 col-sm-12">
-                        <h3>详情</h3>
+                        <h3>{t('detail')}</h3>
                         <div className="card">
                             <div className="info_block">
                                 <div className="row">
@@ -141,7 +143,7 @@ function AddressData({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                                             className="control-label"
                                             data-toggle="tooltip"
                                             tooltip="Available balance">
-                                            余额
+                                            {t('balance')}
                                         </TooltipText>
                                     </div>
                                     <div
@@ -150,9 +152,8 @@ function AddressData({ addressInfo, identityInfo, contractInfo, poolInfo }) {
                                         } bordered-col`}>
                                         <h3 className="info_block__accent">
                                             {(addressInfo && addressInfo.count) || '-'}
-                                            次
                                         </h3>
-                                        <div className="control-label">交易</div>
+                                        <div className="control-label">{t('transactions')}</div>
                                     </div>
                                 </div>
                             </div>

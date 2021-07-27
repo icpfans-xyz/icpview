@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { timeSince, getIcpStringFromE8s, dnaFmt, txTypeFmt } from '../../../shared/utils/utils'
 import { RosettaError, RosettaErrorType } from '../../../pages/api/rosetta/RosettaApi'
-
+import useTranslation from 'next-translate/useTranslation'
 // import {
 //     getEpochTransactions,
 //     getEpochTransactionsCount
@@ -22,6 +22,7 @@ const Transactions = ({
     visible,
     limit = 30
 }) => {
+    const { t } = useTranslation('common')
     const [transactions, setTransactions] = useState([])
     const [rosettaError, setRosettaError] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -87,12 +88,12 @@ const Transactions = ({
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>交易哈希</th>
-                            <th style={{ width: 100 }}>交易时间</th>
-                            <th>发送方</th>
-                            <th>接收方</th>
-                            <th>数量</th>
-                            <th style={{ width: 100 }}>交易类型</th>
+                            <th>{t('transactionHash')}</th>
+                            <th style={{ width: 100 }}>{t('dateTime')}</th>
+                            <th>{t('senderId')}</th>
+                            <th>{t('receiverId')}</th>
+                            <th>{t('amount')}</th>
+                            <th style={{ width: 100 }}>{t('transactionType')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -180,7 +181,7 @@ const Transactions = ({
                 </table>
                 <div className="text-center" style={{ display: 'block' }}>
                     <button type="button" className="btn btn-small" onClick={() => fetchMore()}>
-                    查看更多 ({pageIndex * 10 + limit} of{' '}
+                        {t('showMore')} ({pageIndex * 10 + limit} of{' '}
                         {transactionsCount})
                     </button>
                 </div>
