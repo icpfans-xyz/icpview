@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react'
 // import { useInfiniteQuery, useQuery } from 'react-query'
 import { getIcpStringFromE8s, dateTimeFmt } from '../../../shared/utils/utils'
 import { getAccountTransactions } from '../../../shared/api'
-// import { SkeletonRows } from '../../../shared/components/skeleton'
+import { SkeletonRows } from '../../../shared/components/skeleton'
 // import { WarningTooltip } from '../../../shared/components/tooltip'
 
 const LIMIT = 25
 const intiState = { count: '-', rows: [], isLoading: false, error: null }
-export default function Transactions ({ address, visible, setAddressInfo }) {
+export default function Transactions({ address, visible, setAddressInfo }) {
     const [state, setState] = useState(intiState)
     const [page, setPage] = useState(0)
+    const [loading, setLoading] = useState(false)
     // const fetchTransactions = (_, address) => {
     //     const params = {
     //         orderBy: 'blockHeight',
@@ -23,10 +24,10 @@ export default function Transactions ({ address, visible, setAddressInfo }) {
     //     getAccountTransactions(params)
     // }
     // const { isLoading, error } = state
-    function handlePageing () {
+    function handlePageing() {
         setPage(page + 1)
     }
-    async function getData (_page) {
+    async function getData(_page) {
         const params = {
             orderBy: 'blockHeight',
             order: 'desc',
@@ -42,8 +43,9 @@ export default function Transactions ({ address, visible, setAddressInfo }) {
                 rosettaError: null
             })
         }
+        setLoading(true)
         const { status, data } = await getAccountTransactions(params)
-        console.log(data)
+        setLoading(false)
         if (status === 200) {
             const { count, rows } = data
             setState((state) => {
@@ -81,156 +83,6 @@ export default function Transactions ({ address, visible, setAddressInfo }) {
             getData()
         }
     }, [page])
-    // // setPage(0)
-    // if (address) {
-    //     // console.log(1221333)
-    //     getData()
-    // }
-    // useEffect(() => {
-    //     async function getData () {
-    //         // const res = await rosettaApi.getTransactionsByAccount(address, {
-    //         //     limit: 10,
-    //         //     offset: 10
-    //         //     // operator: 'or',
-    //         //     // max_block: 5,
-    //         //     // offset: 5
-    //         // })
-    //         const params = {
-    //             orderBy: 'blockHeight',
-    //             order: 'desc',
-    //             pageSize: LIMIT,
-    //             page,
-    //             accountId: address
-    //         }
-    //         if (page === 1) {
-    //             setState({
-    //                 count: '-',
-    //                 rows: [],
-    //                 isLoading: true,
-    //                 rosettaError: null
-    //             })
-    //         }
-    //         const { status, data } = await getAccountTransactions(params)
-    //         if (status === 200) {
-    //             const { count, rows } = data
-    //             setState((state) => {
-    //                 return {
-    //                     count,
-    //                     rows: state.rows ? [...state.rows, ...rows] : rows,
-    //                     isLoading: false,
-    //                     rosettaError: null
-    //                 }
-    //             })
-    //             setAddressInfo(({ balance }) => {
-    //                 return { balance, count }
-    //             })
-    //         } else {
-    //             setState((state) => {
-    //                 return {
-    //                     count: state.count,
-    //                     rows: state.rows ? state.rows : [],
-    //                     isLoading: false,
-    //                     rosettaError: null
-    //                 }
-    //             })
-    //         }
-    //     }
-    //     // setPage(0)
-    //     if (address) {
-    //         // console.log(1221333)
-    //         getData()
-    //     }
-    // }, [address, page])
-
-    // useEffect(() => {
-    //     async function getData () {
-    //         // const res = await rosettaApi.getTransactionsByAccount(address, {
-    //         //     limit: 10,
-    //         //     offset: 10
-    //         //     // operator: 'or',
-    //         //     // max_block: 5,
-    //         //     // offset: 5
-    //         // })
-    //         const params = {
-    //             orderBy: 'blockHeight',
-    //             order: 'desc',
-    //             pageSize: LIMIT,
-    //             page,
-    //             accountId: address
-    //         }
-    //         if (page === 1) {
-    //             setState(state => {
-    //                 return {
-    //                     count: '-',
-    //                     rows: [],
-    //                     isLoading: false,
-    //                     rosettaError: null
-    //                 }
-    //             })
-    //         }
-    //         const { status, data } = await getAccountTransactions(params)
-    //         if (status === 200) {
-    //             const { count, rows } = data
-    //             setState((state) => {
-    //                 return {
-    //                     count,
-    //                     rows: state.rows ? [...state.rows, ...rows] : rows,
-    //                     isLoading: false,
-    //                     rosettaError: null
-    //                 }
-    //             })
-    //             setAddressInfo(({ balance }) => {
-    //                 return { balance, count }
-    //             })
-    //         } else {
-    //             setState((state) => {
-    //                 return {
-    //                     count: state.count,
-    //                     rows: state.rows ? state.rows : [],
-    //                     isLoading: false,
-    //                     rosettaError: null
-    //                 }
-    //             })
-    //         }
-    //     }
-    //     if (page > 0) {
-    //         getData()
-    //     }
-    // }, [page])
-    // const errorMessage = ''
-    // if (error) {
-    //     switch (error.errorType) {
-    //     case RosettaError.NotFound:
-    //         errorMessage = 'ERROR: Transaction not found.'
-    //         break
-    //     case RosettaError.Timeout:
-    //         errorMessage = 'ERROR: Timed out while getting the transaction.'
-    //         break
-    //     default: // NetworkError
-    //         errorMessage = 'ERROR: An error occurred while getting the transaction.'
-    //         break
-    //     }
-    // }
-    // const fetchTransactions = (_, address, continuationToken = null) =>
-    //     getTransactions(address, LIMIT, continuationToken)
-
-    // const { data, fetchMore, canFetchMore, status } = useInfiniteQuery(
-    //     address && visible && `${address}/transactions`,
-    //     [address],
-    //     fetchTransactions,
-    //     {
-    //         getFetchMore: (lastGroup) =>
-    //             lastGroup && lastGroup.continuationToken
-    //                 ? lastGroup.continuationToken
-    //                 : false
-    //     }
-    // )
-
-    // const { data: transactionsCount } = useQuery(
-    //     address && visible && `${address}/transactions/count`,
-    //     [address],
-    //     (_, address) => getTransactionsCount(address)
-    // )
     return (
         <div className="table-responsive">
             <table className="table">
@@ -329,6 +181,7 @@ export default function Transactions ({ address, visible, setAddressInfo }) {
                                 </td>
                             </tr>
                         ))}
+                    {!visible || (loading && <SkeletonRows cols={6} />)}
                 </tbody>
             </table>
             <div className="text-center" style={{ display: state.rows && state.rows.length > 0 && (page + 1) * LIMIT < state.count ? 'block' : 'none' }}>

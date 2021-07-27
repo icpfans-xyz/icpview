@@ -24,6 +24,7 @@ const Transactions = ({
 }) => {
     const [transactions, setTransactions] = useState([])
     const [rosettaError, setRosettaError] = useState(null)
+    const [loading, setLoading] = useState(false)
     // const { data, status } = useQuery('get', getTransactions)
     // console.log(data, status)
     // const [tooltipOpen, setTooltipOpen] = useState(false)
@@ -31,9 +32,12 @@ const Transactions = ({
     // const [data, setData] = useState([])
     useEffect(() => {
         const fetchData = async(offset) => {
+            setLoading(true)
             const _transactions = await getTransactions(offset, pageSize)
-            if (transactions instanceof RosettaError) setRosettaError(transactions)
-            else {
+            setLoading(false)
+            if (transactions instanceof RosettaError) {
+                setRosettaError(transactions)
+            } else {
                 setTransactions([...transactions, ..._transactions])
                 setRosettaError(null)
             }
@@ -92,8 +96,8 @@ const Transactions = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {!visible || (status === 'loading' && <SkeletonRows cols={6} />)}
-                        {transactions.map(
+
+                        {transactions.length > 0 && transactions.map(
                             (item) => item && (<tr key={item.hash}>
 
                                 <td style={{ overflow: 'visible' }}>
@@ -171,6 +175,7 @@ const Transactions = ({
                             </tr>
                             )
                         )}
+                        {!visible || (loading && <SkeletonRows cols={6} />)}
                     </tbody>
                 </table>
                 <div className="text-center" style={{ display: 'block' }}>
