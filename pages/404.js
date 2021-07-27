@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-07-01 11:42:41
- * @LastEditTime: 2021-07-18 02:20:47
- * @LastEditors: your name
+ * @LastEditTime: 2021-07-28 01:05:13
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /icp-dao/Users/chenglei/work/icpview/pages/404.js
  */
 import Layout from '../shared/components/layout'
 
-export default function Error404 () {
+export default function Error404() {
     return (
         <Layout title="404 page not found">
             <section className="section section_message" style={{ height: '80vh' }}>
