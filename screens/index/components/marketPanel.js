@@ -87,44 +87,50 @@ export default function MarketPanel() {
                                 name="ICP 价格"
                                 value={usdFmt(precise2(marketData.price))}
                                 change={marketData.priceChange}
-                                tooltip="ICP 24小时价格趋势 https://coingecko.com"
+                                tooltip={t('icpPrice')}
                                 href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                                 blank
                             />
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip={t('icpPrice')}>
-                                {t('icpPrice')}
+                                tooltip={`${t('24Hprice')} https://coingecko.com`}>
+                                <a href="https://idena.today" target="_blank">
+                                    {t('icpPrice')}
+                                </a>
                             </TooltipText>
                         </div>
                         <div className="col-12 col-sm-3 bordered-col">
                             <Card
                                 name="ICP 市值"
                                 value={usdFmt(Math.round(marketData.marketCap))}
-                                tooltip="查看更多 ICP 市值信息"
+                                tooltip={t('icpMarket')}
                                 href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                                 blank
                             />
                             <TooltipText
-                                tooltip={t('icpMarket')}
+                                tooltip={`${t('marketMore')} https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"`}
                                 className="control-label"
                                 data-toggle="tooltip">
-                                {t('icpMarket')}
+                                <a href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin" target="_blank">
+                                    {t('icpMarket')}
+                                </a>
                             </TooltipText>
                         </div>
                         <div className="col-12 col-sm-3 bordered-col">
                             <Card
                                 name="ICP 发行量"
                                 value={usdFmt(Math.round(marketData.totalSupply), '')}
-                                tooltip="查看更多 ICP 发行量信息"
+                                tooltip={t('icpTotalSupply')}
                                 href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                             />
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip={t('icpTotalSupply')}>
-                                {t('icpTotalSupply')}
+                                tooltip="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin">
+                                <a href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin" target="_blank">
+                                    {t('icpTotalSupply')}
+                                </a>
                             </TooltipText>
                         </div>
 
@@ -132,14 +138,16 @@ export default function MarketPanel() {
                             <Card
                                 name="ICP 流通量"
                                 value={usdFmt(Math.round(marketData.circulatingSupply), '')}
-                                tooltip="查看更多 ICP 流通量信息"
+                                tooltip={t('icpCirculatingSupply')}
                                 href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin"
                             />
                             <TooltipText
                                 className="control-label"
                                 data-toggle="tooltip"
-                                tooltip={t('icpCirculatingSupply')}>
-                                {t('icpCirculatingSupply')}
+                                tooltip="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin">
+                                <a href="https://www.coingecko.com/en/search_redirect?id=internet-computer&type=coin" target="_blank">
+                                    {t('icpCirculatingSupply')}
+                                </a>
                             </TooltipText>
                         </div>
                     </div>

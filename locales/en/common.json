@@ -18,7 +18,7 @@
     "icpMarket": "Market",
     "icpTotalSupply": "TotalSupply",
     "icpCirculatingSupply": "CirculatingSupply",
-    "market": "Market",
+    "market": "Market cap",
     "nodeStatus": "ICP NetWork Status",
     "cpuCores": "CPU Cores",
     "memoryTotal": "Memory Total",
@@ -36,5 +36,7 @@
     "address": "Address",
     "transactions": "Transactions",
     "balance": "Balance",
-    "showMore": "Show More"
+    "showMore": "Show More",
+    "24Hprice":"ICP price | 24h price change",
+    "marketMore": "market cap more"
 }

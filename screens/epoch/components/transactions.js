@@ -9,7 +9,7 @@ import useTranslation from 'next-translate/useTranslation'
 //     getEpochTransactionsCount
 // } from '../../../shared/api'
 import { SkeletonRows } from '../../../shared/components/skeleton'
-// import TooltipText from '../../../shared/components/tooltip'
+import TooltipText from '../../../shared/components/tooltip'
 import Tooltip from './tooltip'
 // import { Tooltip } from 'reactstrap'
 
@@ -102,6 +102,18 @@ const Transactions = ({
                             (item) => item && (<tr key={item.hash}>
 
                                 <td style={{ overflow: 'visible' }}>
+                                    {/* <TooltipText tooltip={item.hash}>
+                                        <div
+                                            className="text_block text_block--ellipsis"
+                                            style={{ width: 100 }}>
+                                            <Link
+                                                href="/transaction/[hash]"
+                                                as={`/transaction/${item.hash}`}>
+                                                <a>{item.hash}</a>
+
+                                            </Link>
+                                        </div>
+                                    </TooltipText> */}
                                     <Tooltip text={item.hash}>
                                         <div
                                             className="text_block text_block--ellipsis"
