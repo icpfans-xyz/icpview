@@ -9,8 +9,9 @@ import useTranslation from 'next-translate/useTranslation'
 //     getEpochTransactionsCount
 // } from '../../../shared/api'
 import { SkeletonRows } from '../../../shared/components/skeleton'
-import TooltipText from '../../../shared/components/tooltip'
-import Tooltip from './tooltip'
+// import TooltipText from '../../../shared/components/tooltip'
+import ReactTooltip from 'react-tooltip'
+// import Tooltip from './tooltip'
 // import { Tooltip } from 'reactstrap'
 
 const Transactions = ({
@@ -114,48 +115,50 @@ const Transactions = ({
                                             </Link>
                                         </div>
                                     </TooltipText> */}
-                                    <Tooltip text={item.hash}>
-                                        <div
-                                            className="text_block text_block--ellipsis"
-                                            style={{ width: 100 }}>
-                                            <Link
-                                                href="/transaction/[hash]"
-                                                as={`/transaction/${item.hash}`}>
-                                                <a>{item.hash}</a>
+                                    {/* <Tooltip text={item.hash}> */}
+                                    <div
+                                        className="text_block text_block--ellipsis"
+                                        style={{ width: 100 }}>
+                                        <Link
+                                            href="/transaction/[hash]"
+                                            as={`/transaction/${item.hash}`}>
+                                            <a data-for="main"
+                                                data-tip={item.hash}
+                                                data-iscapture="true">{item.hash}</a>
 
-                                            </Link>
-                                        </div>
-                                    </Tooltip>
+                                        </Link>
+                                    </div>
+                                    {/* </Tooltip> */}
                                 </td>
 
                                 <td>{timeSince(item.timestamp)}</td>
                                 <td style={{ overflow: 'visible' }}>
-                                    <Tooltip text={item.account1Address}>
-                                        <div
-                                            className="text_block text_block--ellipsis"
-                                            style={{ width: 120 }}>
-                                            <Link
-                                                href="/address/[address]"
-                                                as={`/address/${item.account1Address}`}>
-                                                <a>{item.account1Address}</a>
-                                            </Link>
-                                        </div>
-                                    </Tooltip>
+                                    <div
+                                        className="text_block text_block--ellipsis"
+                                        style={{ width: 120 }}>
+                                        <Link
+                                            href="/address/[address]"
+                                            as={`/address/${item.account1Address}`}>
+                                            <a data-for="main"
+                                                data-tip={item.account1Address}
+                                                data-iscapture="true">{item.account1Address}</a>
+                                        </Link>
+                                    </div>
                                 </td>
                                 <td style={{ overflow: 'visible' }}>
                                     {item.account2Address
                                         ? (
-                                            <Tooltip text={item.account2Address}>
-                                                <div
-                                                    className="text_block text_block--ellipsis"
-                                                    style={{ width: 120 }}>
-                                                    <Link
-                                                        href="/address/[address]"
-                                                        as={`/address/${item.account2Address}`}>
-                                                        <a>{item.account2Address}</a>
-                                                    </Link>
-                                                </div>
-                                            </Tooltip>
+                                            <div
+                                                className="text_block text_block--ellipsis"
+                                                style={{ width: 120 }}>
+                                                <Link
+                                                    href="/address/[address]"
+                                                    as={`/address/${item.account2Address}`}>
+                                                    <a data-for="main"
+                                                        data-tip={item.account2Address}
+                                                        data-iscapture="true">{item.account2Address}</a>
+                                                </Link>
+                                            </div>
                                         )
                                         : (
                                             <div className="text_block text_block--ellipsis">-</div>
@@ -191,6 +194,13 @@ const Transactions = ({
                         {!visible || (loading && <SkeletonRows cols={6} />)}
                     </tbody>
                 </table>
+                {transactions.length > 0 && <ReactTooltip
+                    id="main"
+                    place="bottom"
+                    type="dark"
+                    effect="float"
+                    multiline={true}
+                />}
                 <div className="text-center" style={{ display: 'block' }}>
                     <button type="button" className="btn btn-small" onClick={() => fetchMore()}>
                         {t('showMore')} ({pageIndex * 10 + limit} of{' '}

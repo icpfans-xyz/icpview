@@ -11,7 +11,7 @@ import {
     getIcpStringFromE8s,
     dateTimeFmt
 } from '../..//shared/utils/utils'
-import Tooltip from '../../screens/epoch/components/tooltip'
+import ReactTooltip from 'react-tooltip'
 const initState = {
     icpToUsd: null,
     isLoading: false,
@@ -116,18 +116,18 @@ function TxDetails(data) {
 
                             <hr />
                             <div className="control-label">{t('senderId')}:</div>
-                            <Tooltip text={data.account1Address}>
-                                <div
-                                    className="text_block text_block--ellipsis"
-                                    style={{ width: '80%' }}
-                                >
-                                    <Link href="/address/[address]" as={`/address/${data.account1Address}`}>
-                                        <a>
-                                            <span>{data.account1Address}</span>
-                                        </a>
-                                    </Link>
-                                </div>
-                            </Tooltip>
+                            <div
+                                className="text_block text_block--ellipsis"
+                                style={{ width: '80%' }}
+                            >
+                                <Link href="/address/[address]" as={`/address/${data.account1Address}`}>
+                                    <a data-for="main"
+                                        data-tip={data.account1Address}
+                                        data-iscapture="true">
+                                        <span>{data.account1Address}</span>
+                                    </a>
+                                </Link>
+                            </div>
 
                             <hr />
                             <div className="control-label">{t('amount')}:</div>
@@ -152,25 +152,25 @@ function TxDetails(data) {
 
                             <hr />
                             <div className="control-label">{t('receiverId')}:</div>
-                            <Tooltip text={data.account2Address}>
-                                <div
-                                    className="text_block text_block--ellipsis"
-                                    style={{ width: '80%' }}
-                                >
-                                    {data.account2Address
-                                        ? (
-                                            <Link href="/address/[address]" as={`/address/${data.account2Address}`}>
-                                                <a>
-                                                    <span>{data.account2Address}</span>
-                                                </a>
-                                            </Link>
-                                        )
-                                        : (
-                                            '-'
-                                        )}
-                                </div>
+                            <div
+                                className="text_block text_block--ellipsis"
+                                style={{ width: '80%' }}
+                            >
+                                {data.account2Address
+                                    ? (
+                                        <Link href="/address/[address]" as={`/address/${data.account2Address}`}>
+                                            <a data-for="main"
+                                                data-tip={data.account2Address}
+                                                data-iscapture="true">
+                                                <span>{data.account2Address}</span>
+                                            </a>
+                                        </Link>
+                                    )
+                                    : (
+                                        '-'
+                                    )}
+                            </div>
 
-                            </Tooltip>
                             <hr />
                             <div className="control-label">Fee paid:</div>
                             {/* <div className="text_block">{dnaFmt(getIcpStringFromE8s(data.fee), ' ICP')}</div> */}
@@ -213,6 +213,13 @@ function TxDetails(data) {
                                 </>
                             )} */}
                         </div>
+                        {data && <ReactTooltip
+                            id="main"
+                            place="bottom"
+                            type="dark"
+                            effect="float"
+                            multiline={true}
+                        />}
                     </div>
                 </div>
             </div>

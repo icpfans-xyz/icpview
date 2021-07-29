@@ -7,7 +7,7 @@ import { getAccountTransactions } from '../../../shared/api'
 import { SkeletonRows } from '../../../shared/components/skeleton'
 import useTranslation from 'next-translate/useTranslation'
 // import { WarningTooltip } from '../../../shared/components/tooltip'
-
+import ReactTooltip from 'react-tooltip'
 const LIMIT = 25
 const intiState = { count: '-', rows: [], isLoading: false, error: null }
 export default function Transactions({ address, visible, setAddressInfo }) {
@@ -111,7 +111,9 @@ export default function Transactions({ address, visible, setAddressInfo }) {
                                         <Link
                                             href="/transaction/[id]"
                                             as={`/transaction/${item.id}`}>
-                                            <a>{item.id}</a>
+                                            <a data-for="main"
+                                                data-tip={item.id}
+                                                data-iscapture="true">{item.id}</a>
                                         </Link>
                                     </div>
                                 </td>
@@ -136,7 +138,9 @@ export default function Transactions({ address, visible, setAddressInfo }) {
                                                 <Link
                                                     href="/address/[address]"
                                                     as={`/address/${item.senderId}`}>
-                                                    <a>{item.senderId}</a>
+                                                    <a data-for="main"
+                                                        data-tip={item.senderId}
+                                                        data-iscapture="true">{item.senderId}</a>
                                                 </Link>
                                             )}
                                     </div>
@@ -158,7 +162,9 @@ export default function Transactions({ address, visible, setAddressInfo }) {
                                                             <Link
                                                                 href="/address/[address]"
                                                                 as={`/address/${item.receiverId}`}>
-                                                                <a>{item.receiverId}</a>
+                                                                <a data-for="main"
+                                                                    data-tip={item.receiverId}
+                                                                    data-iscapture="true">{item.receiverId}</a>
                                                             </Link>
                                                         )}
                                                 </div>
@@ -186,6 +192,13 @@ export default function Transactions({ address, visible, setAddressInfo }) {
                     {!visible || (loading && <SkeletonRows cols={6} />)}
                 </tbody>
             </table>
+            {state.rows.length > 0 && <ReactTooltip
+                id="main"
+                place="bottom"
+                type="dark"
+                effect="float"
+                multiline={true}
+            />}
             <div className="text-center" style={{ display: state.rows && state.rows.length > 0 && (page + 1) * LIMIT < state.count ? 'block' : 'none' }}>
                 <button type="button" className="btn btn-small" onClick={() => handlePageing()}>
                     {t('showMore')} ({state.count < LIMIT ? state.count : (page + 1) * LIMIT} of{' '}
