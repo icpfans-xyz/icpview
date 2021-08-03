@@ -32,7 +32,6 @@ export default function MarketPanel() {
                 getBoundaryNodesTotal(),
                 getNodeProvidersTotal()
             ])
-            console.log(res)
             setState({
                 nodeCount: res[0].ic_nodes_count[0][1],
                 cpuCores: res[1].ic_cpu_cores[0][1],

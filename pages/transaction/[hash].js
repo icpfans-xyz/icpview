@@ -115,18 +115,20 @@ function TxDetails(data) {
                             </div>
 
                             <hr />
-                            <div className="control-label">{t('senderId')}:</div>
-                            <div
-                                className="text_block text_block--ellipsis"
-                                style={{ width: '80%' }}
-                            >
-                                <Link href="/address/[address]" as={`/address/${data.account1Address}`}>
-                                    <a data-for="main"
-                                        data-tip={data.account1Address}
-                                        data-iscapture="true">
-                                        <span>{data.account1Address}</span>
-                                    </a>
-                                </Link>
+                            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                                <div className="control-label">{t('senderId')}:</div>
+                                <div
+                                    className="text_block"
+                                    style={{ width: '80%', wordWrap: 'break-word' }}
+                                >
+                                    <Link href="/address/[address]" as={`/address/${data.account1Address}`}>
+                                        <a data-for="main"
+                                            data-tip={data.account1Address}
+                                            data-iscapture="true">
+                                            <span>{data.account1Address}</span>
+                                        </a>
+                                    </Link>
+                                </div>
                             </div>
 
                             <hr />
@@ -151,24 +153,26 @@ function TxDetails(data) {
                             </div>
 
                             <hr />
-                            <div className="control-label">{t('receiverId')}:</div>
-                            <div
-                                className="text_block text_block--ellipsis"
-                                style={{ width: '80%' }}
-                            >
-                                {data.account2Address
-                                    ? (
-                                        <Link href="/address/[address]" as={`/address/${data.account2Address}`}>
-                                            <a data-for="main"
-                                                data-tip={data.account2Address}
-                                                data-iscapture="true">
-                                                <span>{data.account2Address}</span>
-                                            </a>
-                                        </Link>
-                                    )
-                                    : (
-                                        '-'
-                                    )}
+                            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                                <div className="control-label" >{t('receiverId')}:</div>
+                                <div
+                                    className="text_block"
+                                    style={{ width: '80%', wordWrap: 'break-word' }}
+                                >
+                                    {data.account2Address
+                                        ? (
+                                            <Link href="/address/[address]" as={`/address/${data.account2Address}`}>
+                                                <a data-for="main"
+                                                    data-tip={data.account2Address}
+                                                    data-iscapture="true">
+                                                    <span>{data.account2Address}</span>
+                                                </a>
+                                            </Link>
+                                        )
+                                        : (
+                                            '-'
+                                        )}
+                                </div>
                             </div>
 
                             <hr />

@@ -34,7 +34,6 @@ const Home = () => {
     const { hash, setHash, hashReady } = useHash()
     useHashChange((hash) => setHash(hash))
     const [state, setState] = useState(initState)
-    const { transactionsCount } = state
     const rosettaApi = new RosettaApi()
     async function getTransactions(offset, limit) {
         const { transactionsCount } = state
@@ -45,7 +44,7 @@ const Home = () => {
             return []
         }
     }
-
+    const { transactionsCount } = state
     const [pageIndex, setPageIndex] = useState(0)
     function handelePage(page) {
         setPageIndex(pageIndex + page)

@@ -38,5 +38,6 @@
     "balance": "Balance",
     "showMore": "Show More",
     "24Hprice":"ICP price | 24h price change",
-    "marketMore": "market cap more"
+    "marketMore": "market cap more",
+    "status": "Status"
 }

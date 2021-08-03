@@ -1,7 +1,7 @@
 import Link from 'next/link'
 // import { useQuery } from 'react-query'
 import { useEffect, useState } from 'react'
-import { timeSince, getIcpStringFromE8s, dnaFmt, txTypeFmt } from '../../../shared/utils/utils'
+import { timeSince, getIcpStringFromE8s, txTypeFmt } from '../../../shared/utils/utils'
 import { RosettaError, RosettaErrorType } from '../../../pages/api/rosetta/RosettaApi'
 import useTranslation from 'next-translate/useTranslation'
 // import {
@@ -27,6 +27,8 @@ const Transactions = ({
     const [transactions, setTransactions] = useState([])
     const [rosettaError, setRosettaError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [once, setOnce] = useState(true)
+    const [index, setIndex] = useState(-1)
     // const { data, status } = useQuery('get', getTransactions)
     // console.log(data, status)
     // const [tooltipOpen, setTooltipOpen] = useState(false)
@@ -34,8 +36,10 @@ const Transactions = ({
     // const [data, setData] = useState([])
     useEffect(() => {
         const fetchData = async(offset) => {
+            setOnce(false)
             setLoading(true)
             const _transactions = await getTransactions(offset, pageSize)
+            setIndex(_transactions.length === 0 ? -1 : pageIndex)
             setLoading(false)
             if (transactions instanceof RosettaError) {
                 setRosettaError(transactions)
@@ -45,8 +49,13 @@ const Transactions = ({
             }
         }
         const offset = pageIndex !== null ? pageIndex * pageSize : null
-        if (offset !== null) fetchData(offset)
-    }, [getTransactions, pageIndex, pageSize])
+        // if (offset !== null) fetchData(offset)
+        if ((!once && (index !== pageIndex))) {
+            offset !== null && fetchData(offset)
+        } else if (once) {
+            offset !== null && fetchData(offset)
+        }
+    }, [getTransactions, transactionsCount, pageIndex])
     // const fetchTransactions = (_, epoch, continuationToken = null) =>
     //     getEpochTransactions(epoch, limit, continuationToken)
 
@@ -165,7 +174,8 @@ const Transactions = ({
                                         )}
                                 </td>
                                 <td style={{ textAlign: 'right' }}>
-                                    {dnaFmt(
+                                    {getIcpStringFromE8s(item.amount)} ICP
+                                    {/* {dnaFmt(
                                         (!item.txReceipt || item.txReceipt.success) &&
                                         getIcpStringFromE8s(
                                             !(item.amount * 1) &&
@@ -176,7 +186,7 @@ const Transactions = ({
                                                               item.amount
                                         ),
                                         ' ICP'
-                                    )}
+                                    )} */}
                                 </td>
                                 <td>
                                     {/* {item.txReceipt && !item.txReceipt.success && (

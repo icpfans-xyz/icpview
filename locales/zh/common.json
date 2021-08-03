@@ -38,5 +38,6 @@
     "balance": "余额",
     "showMore": "查看更多",
     "24Hprice":"ICP 24小时价格趋势",
-    "marketMore": "查看更多ICP市值信息"
+    "marketMore": "查看更多ICP市值信息",
+    "status": "交易状态"
 }
